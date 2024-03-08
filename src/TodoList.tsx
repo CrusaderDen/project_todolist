@@ -1,8 +1,8 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {Button} from "./Button";
 import {TodoListHeader} from "./TodoListHeader";
 import {Task} from "./Task";
-import {TaskType} from "./App";
+import {FilterValuesType, TaskType} from "./App";
 import styled from "styled-components";
 import * as diagnostics_channel from "diagnostics_channel";
 
@@ -11,10 +11,18 @@ type TodoListPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: number) => void
+    addTask: () => void
+    getNewTask: (event: ChangeEvent<HTMLInputElement>) => void
+    changeTodoListFilter: (filter: FilterValuesType) => void
 }
 
 
-export const TodoList = ({title, tasks, removeTask}: TodoListPropsType) => {
+export const TodoList = ({title, tasks, removeTask, addTask, getNewTask, changeTodoListFilter}: TodoListPropsType) => {
+
+    function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
+        getNewTask(event)
+    }
+
 
     const tasksList = tasks.length === 0
         ? <StyleEmpty>Список пуст</StyleEmpty>
@@ -39,18 +47,20 @@ export const TodoList = ({title, tasks, removeTask}: TodoListPropsType) => {
             </StyledHeader>
 
             <StyledInputBlock>
-                <input/>
-                <Button title={'+'}/>
+                <input onChange={onChangeHandler}/>
+                <Button title={'+'} onClickHandler={() => {
+                    addTask()
+                }}/>
             </StyledInputBlock>
 
             <StyledTaskList>
                 {tasksList}
             </StyledTaskList>
-            
+
             <StyledButtonBlock>
-                <Button title={'All'}/>
-                <Button title={'Active'}/>
-                <Button title={'Completed'}/>
+                <Button title={'All'} onClickHandler={() => changeTodoListFilter('all')}/>
+                <Button title={'Active'} onClickHandler={() => changeTodoListFilter('active')}/>
+                <Button title={'Completed'} onClickHandler={() => changeTodoListFilter('completed')}/>
             </StyledButtonBlock>
 
         </StyledTodolist>
@@ -58,10 +68,10 @@ export const TodoList = ({title, tasks, removeTask}: TodoListPropsType) => {
 }
 
 const StyledTodolist = styled.div`
-    background-color: rgba(30, 186, 210, 0.7);
+    background-image: linear-gradient(160deg, rgba(33, 212, 253, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);
     box-shadow: 10px 10px 20px rgba(18, 107, 120, 0.9);
     border-radius: 5px;
-    padding: 15px;
+    padding: 20px;
     min-width: 250px;
 
 `
@@ -104,6 +114,18 @@ const StyledInputBlock = styled.div`
 const StyledButtonBlock = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 10px;
+
+    & button {
+        min-width: 81px;
+        height: 25px;
+        font-weight: 700;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
 `
 
 const StyleEmpty = styled.span`

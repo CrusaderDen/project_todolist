@@ -3,18 +3,21 @@ import React from 'react';
 type ButtonPropsType = {
     title: string
     taskId?: number
-    removeTask?: (taskId: number) => void
+    onClickHandler?: () => void
 }
 
-export const Button = (props: ButtonPropsType) => {
+export const Button = ({title, onClickHandler}: ButtonPropsType) => {
 
-    const onClickHandler = () => {
-        if (props.title && props.removeTask && props.taskId) {
-            props.removeTask(props.taskId)
-        }
-    }
+    // const onClickHandler = () => {
+    //     if (props.title && props.removeTask && props.taskId) {
+    //         props.removeTask(props.taskId)
+    //     }
+    //     if (props.addTask) {
+    //         props.addTask()
+    //     }
+    // }
 
     return (
-        <button onClick={onClickHandler}>{props.title}</button>
+        <button onClick={onClickHandler}>{title}</button>
     );
 };

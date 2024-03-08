@@ -17,7 +17,9 @@ export const Task = ({taskId, title, isDone, removeTask}: TaskPropsType) => {
                 <input type="checkbox" defaultChecked={isDone}/>
                 <span>{title}</span>
             </span>
-            <Button title={'x'} removeTask={removeTask} taskId={taskId}/>
+            <Button title={'x'} taskId={taskId} onClickHandler={() => {
+                removeTask(taskId)
+            }}/>
         </StyledTask>
     );
 };
