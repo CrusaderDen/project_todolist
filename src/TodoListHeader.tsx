@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from "styled-components";
 
 
 type TodoListHeaderPropsType = {
@@ -7,6 +8,11 @@ type TodoListHeaderPropsType = {
 
 export const TodoListHeader = ({title}: TodoListHeaderPropsType) => {
     return (
-        <h3>{title}</h3>
+        <StyledTaskTitle>{title}</StyledTaskTitle>
     );
 };
+
+const StyledTaskTitle = styled.h3`
+    text-align: center;
+    margin: 10px 0;
+`

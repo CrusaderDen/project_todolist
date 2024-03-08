@@ -1,50 +1,117 @@
 import React from "react";
 import {Button} from "./Button";
 import {TodoListHeader} from "./TodoListHeader";
+import {Task} from "./Task";
+import {TaskType} from "./App";
+import styled from "styled-components";
+import * as diagnostics_channel from "diagnostics_channel";
 
 
 type TodoListPropsType = {
     title: string
     tasks: TaskType[]
-}
-
-export type TaskType = {
-    id: number
-    title: string
-    isDone: boolean
+    removeTask: (taskId: number) => void
 }
 
 
-export const TodoList = ({title,tasks}: TodoListPropsType) => {
+export const TodoList = ({title, tasks, removeTask}: TodoListPropsType) => {
 
     const tasksList = tasks.length === 0
-    ? <span className={'emptyList'}>Список пуст</span>
-        :   tasks.map((task: TaskType)=>{
+        ? <StyleEmpty>Список пуст</StyleEmpty>
+        : tasks.map((task: TaskType) => {
             return (
-                <li key={task.id}><input type="checkbox" defaultChecked={task.isDone}/> <span>{task.title}</span></li>
+                <li key={task.id}>
+                    <Task taskId={task.id} title={task.title} isDone={task.isDone} removeTask={removeTask}/>
+                </li>
             )
         })
 
 
-
     return (
-        <div className={'todolist'}>
-            <TodoListHeader title={title}/>
-            <div>
+        <StyledTodolist>
+
+            <StyledButtonClose>
+                <Button title={'X'}/>
+            </StyledButtonClose>
+
+            <StyledHeader>
+                <TodoListHeader title={title}/>
+            </StyledHeader>
+
+            <StyledInputBlock>
                 <input/>
                 <Button title={'+'}/>
-            </div>
-            <ul>
+            </StyledInputBlock>
+
+            <StyledTaskList>
                 {tasksList}
-                {/*<li><input type="checkbox" checked={tasks[0].isDone}/> <span>{tasks[0].title}</span></li>*/}
-                {/*<li><input type="checkbox" checked={tasks[1].isDone}/> <span>{tasks[1].title}</span></li>*/}
-                {/*<li><input type="checkbox" checked={tasks[2].isDone}/> <span>{tasks[2].title}</span></li>*/}
-            </ul>
-            <div>
+            </StyledTaskList>
+            
+            <StyledButtonBlock>
                 <Button title={'All'}/>
                 <Button title={'Active'}/>
                 <Button title={'Completed'}/>
-            </div>
-        </div>
+            </StyledButtonBlock>
+
+        </StyledTodolist>
     )
 }
+
+const StyledTodolist = styled.div`
+    background-color: rgba(30, 186, 210, 0.7);
+    box-shadow: 10px 10px 20px rgba(18, 107, 120, 0.9);
+    border-radius: 5px;
+    padding: 15px;
+    min-width: 250px;
+
+`
+
+const StyledHeader = styled.div`
+    position: relative;
+`
+const StyledTaskList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border: 2px inset black;
+    padding: 10px;
+    margin: 20px 0;
+
+    & li {
+        list-style: none;
+    }
+`
+
+const StyledButtonClose = styled.div`
+    text-align: right;
+`
+const StyledInputBlock = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px 0;
+
+    & input {
+        height: 30px;
+    }
+
+    & button {
+        height: 30px;
+        width: 30px;
+    }
+`
+
+const StyledButtonBlock = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+const StyleEmpty = styled.span`
+    color: red;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+`
+
+
+
