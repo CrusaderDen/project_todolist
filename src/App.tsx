@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {TodoList} from "./TodoList";
+import {v1} from "uuid";
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -17,26 +18,33 @@ function App() {
     const todoListTitle = 'What to learn'
 
     const [tasks, setTasks] = useState<TaskType[]>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'React', isDone: false},
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'React', isDone: false},
     ])
 
-    const [newTask, setNewTask] = useState<TaskType>({id: 0, title: '', isDone: false})
+
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
-
-    function getNewTask(event: ChangeEvent<HTMLInputElement>) {
-        let currenTask: string = event.currentTarget.value
-        setNewTask({id: tasks.length + 1, title: currenTask, isDone: false})
+    function addTask(taskTitle: string) {
+        const newTask: TaskType = {
+            id: v1(),
+            title: taskTitle,
+            isDone: false
+        }
+        const nextState = [newTask, ...tasks]
+        if (newTask.title !== '') {
+            setTasks(nextState)
+        }
     }
 
-    function addTask() {
-        setTasks([...tasks, newTask])
-
+    function changeStatus(id: string, isDone: boolean) {
+        let task = tasks.find(t => id === t.id)
+        if (task) task.isDone = isDone
+        setTasks(tasks)
     }
 
-    function removeTask(taskId: number): void {
+    function removeTask(taskId: string): void {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
 
@@ -48,9 +56,9 @@ function App() {
     const getFilteredTasks = (allTasks: Array<TaskType>, currentFilter: FilterValuesType): Array<TaskType> => {
         switch (currentFilter) {
             case 'active' :
-                return allTasks.filter(t => t.isDone === false)
+                return allTasks.filter(t => !t.isDone)
             case 'completed':
-                return allTasks.filter(t => t.isDone === true)
+                return allTasks.filter(t => t.isDone)
             default:
                 return allTasks
         }
@@ -58,6 +66,9 @@ function App() {
 
     const filteredTasks = getFilteredTasks(tasks, filter)
 
+    const checkedToggle = () => {
+
+    }
 
     return (
         <div className="App">
@@ -66,8 +77,8 @@ function App() {
                 tasks={filteredTasks}
                 removeTask={removeTask}
                 addTask={addTask}
-                getNewTask={getNewTask}
                 changeTodoListFilter={changeTodoListFilter}
+                changeStatus={changeStatus}
             />
         </div>
     );

@@ -1,25 +1,41 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from "./Button";
 import styled from "styled-components";
 
 
 type TaskPropsType = {
-    taskId: number
+    taskId: string
     title: string
     isDone: boolean
-    removeTask: (taskId: number) => void
+    removeTask: (taskId: string) => void
+    changeStatus: (id: string, isDone: boolean) => void
 }
 
-export const Task = ({taskId, title, isDone, removeTask}: TaskPropsType) => {
+export const Task = ({taskId, title, isDone, removeTask, changeStatus}: TaskPropsType) => {
+
+    const [currentIsDone, setCurrentIsDone] = useState(isDone)
+
+    function onRemoveHandler() {
+        removeTask(taskId)
+    }
+
+    function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+        let change = e.currentTarget.checked
+        changeStatus(taskId, change)
+        setCurrentIsDone(change)
+    }
+
+
     return (
         <StyledTask>
             <span>
-                <input type="checkbox" defaultChecked={isDone}/>
+                <input
+                    type="checkbox"
+                    checked={currentIsDone}
+                    onChange={onChangeHandler}/>
                 <span>{title}</span>
             </span>
-            <Button title={'x'} taskId={taskId} onClickHandler={() => {
-                removeTask(taskId)
-            }}/>
+            <Button title={'x'} taskId={taskId} onClickHandler={onRemoveHandler}/>
         </StyledTask>
     );
 };
