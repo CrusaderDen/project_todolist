@@ -4,7 +4,6 @@ import {TodoListHeader} from "./TodoListHeader";
 import {Task} from "./Task";
 import {FilterValuesType, TaskType} from "./App";
 import styled from "styled-components";
-import * as diagnostics_channel from "diagnostics_channel";
 
 
 type TodoListPropsType = {
@@ -27,8 +26,10 @@ export const TodoList = ({
                          }: TodoListPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState<string>('')
+    const [error, setError] = useState<string | null>(null)
 
     function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
+        setError(null)
         setNewTaskTitle(event.currentTarget.value)
     }
 
@@ -39,7 +40,11 @@ export const TodoList = ({
     }
 
     function addTaskHandler() {
-        addTask(newTaskTitle)
+        if (newTaskTitle.trim() === '') {
+            setError('Title is required')
+            return
+        }
+        addTask(newTaskTitle.trim())
         setNewTaskTitle('')
     }
 
@@ -68,6 +73,7 @@ export const TodoList = ({
         })
 
 
+    // @ts-ignore
     return (
         <StyledTodolist>
 
@@ -80,7 +86,7 @@ export const TodoList = ({
             </StyledHeader>
 
             <StyledInputBlock>
-                <input
+                <StyledInput
                     placeholder={'New task'}
                     value={newTaskTitle}
                     onChange={onChangeHandler}
@@ -92,6 +98,7 @@ export const TodoList = ({
                         addTaskHandler()
                     }
                     }/>
+                {error && <div className={'error-message'}>{error}</div>}
             </StyledInputBlock>
 
             <StyledTaskListHeader>Task list</StyledTaskListHeader>
@@ -144,18 +151,6 @@ const StyledInputBlock = styled.div`
     gap: 20px;
     margin: 20px 0;
 
-    & input {
-        height: 30px;
-        width: 100%;
-        border-radius: 5px;
-        border: none;
-        padding-left: 5px;
-
-        &:focus {
-            outline: none;
-            border: none;
-        }
-    }
 
     & button {
         //display: none;
@@ -176,6 +171,23 @@ const StyledInputBlock = styled.div`
         }
     }
 `
+
+const StyledInput = styled.input`
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding-left: 5px;
+
+    &:focus {
+        outline: none;
+        border: none;
+    }
+
+        // border: ${'2px solid red'};
+        // z-index: ${2};
+`
+
 
 const StyledButtonBlock = styled.div`
     display: flex;

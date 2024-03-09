@@ -9,3 +9,16 @@
     margin: 20px;
 }
 
+.error {
+    border: 1px solid red;
+}
+
+.error-message {
+    color: red;
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    font-weight: 700;
+
+}
+

@@ -33,9 +33,7 @@ function App() {
             isDone: false
         }
         const nextState = [newTask, ...tasks]
-        if (newTask.title !== '') {
-            setTasks(nextState)
-        }
+        setTasks(nextState)
     }
 
     function changeStatus(id: string, isDone: boolean) {
