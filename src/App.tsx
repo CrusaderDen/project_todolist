@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./TodoList";
 import {v1} from "uuid";
@@ -41,7 +41,7 @@ function App() {
     function changeStatus(id: string, isDone: boolean) {
         let task = tasks.find(t => id === t.id)
         if (task) task.isDone = isDone
-        setTasks(tasks)
+        setTasks([...tasks])
     }
 
     function removeTask(taskId: string): void {
@@ -65,10 +65,6 @@ function App() {
     }
 
     const filteredTasks = getFilteredTasks(tasks, filter)
-
-    const checkedToggle = () => {
-
-    }
 
     return (
         <div className="App">

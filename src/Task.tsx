@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import {Button} from "./Button";
 import styled from "styled-components";
 
@@ -13,16 +13,13 @@ type TaskPropsType = {
 
 export const Task = ({taskId, title, isDone, removeTask, changeStatus}: TaskPropsType) => {
 
-    const [currentIsDone, setCurrentIsDone] = useState(isDone)
 
     function onRemoveHandler() {
         removeTask(taskId)
     }
 
     function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
-        let change = e.currentTarget.checked
-        changeStatus(taskId, change)
-        setCurrentIsDone(change)
+        changeStatus(taskId, e.currentTarget.checked)
     }
 
 
@@ -31,7 +28,7 @@ export const Task = ({taskId, title, isDone, removeTask, changeStatus}: TaskProp
             <span>
                 <input
                     type="checkbox"
-                    checked={currentIsDone}
+                    checked={isDone}
                     onChange={onChangeHandler}/>
                 <span>{title}</span>
             </span>
