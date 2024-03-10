@@ -21,6 +21,8 @@ function App() {
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
         {id: v1(), title: 'React', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Next JS', isDone: false},
     ])
 
 
@@ -45,6 +47,12 @@ function App() {
     function removeTask(taskId: string): void {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
+
+    // const [todoHeight, setTodoHeight] = useState<number>(0)
+    //
+    // function getTodoHeight(height: number) {
+    //     console.log(height, "height");
+    // }
 
     function changeTodoListFilter(filter: FilterValuesType) {
         setFilter(filter)
@@ -73,6 +81,7 @@ function App() {
                 addTask={addTask}
                 changeTodoListFilter={changeTodoListFilter}
                 changeStatus={changeStatus}
+                filter={filter}
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useRef, useState} from "react";
 import {Button} from "./Button";
 import {TodoListHeader} from "./TodoListHeader";
 import {Task} from "./Task";
@@ -13,6 +13,7 @@ type TodoListPropsType = {
     addTask: (newTitle: string) => void
     changeTodoListFilter: (filter: FilterValuesType) => void
     changeStatus: (id: string, isDone: boolean) => void
+    filter: FilterValuesType
 }
 
 
@@ -22,7 +23,8 @@ export const TodoList = ({
                              removeTask,
                              addTask,
                              changeTodoListFilter,
-                             changeStatus
+                             changeStatus,
+                             filter,
                          }: TodoListPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState<string>('')
@@ -65,7 +67,7 @@ export const TodoList = ({
         ? <StyleEmpty>No any tasks yet</StyleEmpty>
         : tasks.map((task: TaskType) => {
             return (
-                <li key={task.id}>
+                <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                     <Task taskId={task.id} title={task.title} isDone={task.isDone} removeTask={removeTask}
                           changeStatus={changeStatus}/>
                 </li>
@@ -73,9 +75,17 @@ export const TodoList = ({
         })
 
 
-    // @ts-ignore
+    // const [todoHeight, setTodoHeight] = useState<number>(0)
+    //
+    let todoListRef = useRef<any>()
+    // useEffect(() => {
+    //     setTodoHeight(todoListRef.current.getBoundingClientRect().height);
+    // }, [todoListRef]);
+
+
     return (
-        <StyledTodolist>
+        <StyledTodolist ref={todoListRef} onResize={() => {
+        }}>
 
             <StyledButtonClose>
                 <Button title={'X'}/>
@@ -107,14 +117,18 @@ export const TodoList = ({
             </StyledTaskList>
 
             <StyledButtonBlock>
-                <Button title={'All'} onClickHandler={onAllClickHandler}/>
-                <Button title={'Active'} onClickHandler={onActiveClickHandler}/>
-                <Button title={'Completed'} onClickHandler={onCompletedClickHandler}/>
+                <Button title={'All'} onClickHandler={onAllClickHandler} currentFilter={filter}
+                        expectedFilter={'all'}/>
+                <Button title={'Active'} onClickHandler={onActiveClickHandler} currentFilter={filter}
+                        expectedFilter={'active'}/>
+                <Button title={'Completed'} onClickHandler={onCompletedClickHandler} currentFilter={filter}
+                        expectedFilter={'completed'}/>
             </StyledButtonBlock>
 
         </StyledTodolist>
     )
 }
+
 
 const StyledTodolist = styled.div`
     background-image: linear-gradient(160deg, rgba(33, 212, 253, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);
@@ -198,10 +212,10 @@ const StyledButtonBlock = styled.div`
         min-width: 81px;
         height: 25px;
         font-weight: 700;
-        transition: all 0.3s ease-in-out;
+        transition: transform 0.1s ease-in, background-color 0.1s ease-in;
 
         &:hover {
-            transform: scale(1.15);
+            transform: scale(1.05);
         }
     }
 `
@@ -216,5 +230,7 @@ const StyledTaskListHeader = styled.h4`
     font-size: 18px;
 
 `
+
+
 
 
