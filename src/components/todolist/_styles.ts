@@ -1,6 +1,16 @@
-import styled, {css} from "styled-components";
+import styled, {css, keyframes} from "styled-components";
+
+const rotate360 = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`
 
 const StyledButton = styled.button<any>`
+    cursor: pointer;
     user-select: none;
     border-radius: 3px;
     border: none;
@@ -20,12 +30,20 @@ const StyledTask = styled.div`
 
         &:hover {
             background-color: #cfcfcf;
+            color: red;
         }
     }
 
     & span {
+
         & input {
+            cursor: pointer;
             margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            position: relative;
+            top: 2px;
+
         }
     }
 
@@ -59,7 +77,24 @@ const StyledTaskList = styled.ul`
 
 const StyledButtonClose = styled.div`
     text-align: right;
+
+    & button {
+        width: 30px;
+        height: 30px;
+        transition: all 0.5s ease;
+
+        &:hover {
+            background-color: #cfcfcf;
+
+            & span {
+                animation: ${rotate360} 1s;
+            }
+        }
+
+    }
 `
+
+
 const StyledInputBlock = styled.div`
     position: relative;
     display: flex;
@@ -100,8 +135,6 @@ const StyledInput = styled.input`
         border: none;
     }
 
-        // border: ${'2px solid red'};
-        // z-index: ${2};
 `
 
 
@@ -154,6 +187,5 @@ export const S = {
     StyleEmpty,
     StyledTasksTitle,
     StyledTaskTitle
-
 
 }

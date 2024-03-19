@@ -30,7 +30,7 @@ export const Task = (props: TaskPropsType) => {
                     type="checkbox"
                     checked={props.isDone}
                     onChange={onChangeHandler}/>
-                <span>{props.title}</span>
+                <span className={props.isDone ? 'is-done' : ''}>{props.title}</span>
             </span>
             <UniversalButton title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>
         </S.StyledTask>

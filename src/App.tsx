@@ -46,7 +46,7 @@ function App() {
             {id: v1(), title: 'Next JS', isDone: false},
         ],
         [todolistId2]: [
-            {id: v1(), title: '"Эклерчики"', isDone: true},
+            {id: v1(), title: 'Эклерчики', isDone: true},
             {id: v1(), title: 'Пивко', isDone: false},
             {id: v1(), title: 'Чипсы', isDone: true},
         ],
@@ -79,6 +79,10 @@ function App() {
         const filteredTasks = tasks.filter(task => task.id !== taskId)
         allTasks[todolistId] = filteredTasks
         setAllTasks({...allTasks})
+    }
+
+    function removeTodolist(todolistId: string) {
+        setTodolists(todolists.filter(td => td.id !== todolistId))
     }
 
 
@@ -127,6 +131,7 @@ function App() {
                     title={todoList.title}
                     tasks={filteredTasks}
                     removeTask={removeTask}
+                    removeTodolist={removeTodolist}
                     addTask={addTask}
                     changeTodoListFilter={changeTodoListFilter}
                     changeStatus={changeStatus}

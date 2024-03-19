@@ -16,7 +16,9 @@ export const UniversalButton = (props: ButtonPropsType) => {
             onClick={props.onClickHandler}
             filter={props.currentFilter}
             $expectedFilter={props.expectedFilter}
-            title={props.title}>{props.title}
+            title={props.title}
+        >
+            <span>{props.title}</span>
         </S.StyledButton>
     );
 };

@@ -16,7 +16,7 @@ export const TasksList = (props: TasksListPropsType) => {
         ? <S.StyleEmpty>No any tasks yet</S.StyleEmpty>
         : props.tasks.map((task: TaskType) => {
             return (
-                <li key={task.id} className={task.isDone ? 'is-done' : ''}>
+                <li key={task.id}>
                     <Task taskId={task.id} title={task.title} isDone={task.isDone} removeTask={props.removeTask}
                           changeStatus={props.changeStatus} todoListId={props.todoListId}/>
                 </li>

@@ -12,6 +12,7 @@ type TodoListPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string, todolistId: string) => void
+    removeTodolist: (todolistId: string) => void
     addTask: (newTitle: string, todolistId: string) => void
     changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
@@ -23,7 +24,7 @@ export const TodoList = (props: TodoListPropsType) => {
 
     return (
         <S.StyledTodolist>
-            <CloseTodoListButton/>
+            <CloseTodoListButton removeTodolist={props.removeTodolist} todoListId={props.todoListId}/>
             <FilterButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}
                            todoListId={props.todoListId}/>
             <TodoListTitle title={props.title}/>
