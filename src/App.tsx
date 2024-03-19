@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TodoList} from "./TodoList";
+import {TodoList} from "./components/todolist/TodoList";
 import {v1} from "uuid";
 
 export type TaskType = {
@@ -48,11 +48,6 @@ function App() {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
 
-    // const [todoHeight, setTodoHeight] = useState<number>(0)
-    //
-    // function getTodoHeight(height: number) {
-    //     console.log(height, "height");
-    // }
 
     function changeTodoListFilter(filter: FilterValuesType) {
         setFilter(filter)
