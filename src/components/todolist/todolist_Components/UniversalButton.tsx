@@ -10,7 +10,7 @@ type ButtonPropsType = {
     expectedFilter?: string
 }
 
-export const Button = (props: ButtonPropsType) => {
+export const UniversalButton = (props: ButtonPropsType) => {
     return (
         <S.StyledButton
             onClick={props.onClickHandler}

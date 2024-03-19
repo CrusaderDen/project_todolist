@@ -126,7 +126,7 @@ const StyleEmpty = styled.span`
     text-align: center;
 `
 
-const StyledTaskListHeader = styled.h4`
+const StyledTasksTitle = styled.h4`
     text-align: center;
     font-weight: 500;
     font-size: 18px;
@@ -150,7 +150,7 @@ export const S = {
     StyledInput,
     StyledFilterButtonBlock,
     StyleEmpty,
-    StyledTaskListHeader,
+    StyledTasksTitle,
     StyledTaskTitle
 
 

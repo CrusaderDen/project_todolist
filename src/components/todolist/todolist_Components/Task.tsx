@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {Button} from "./Button";
+import {UniversalButton} from "./UniversalButton";
 import {S} from '../_styles'
 
 type TaskPropsType = {
@@ -31,7 +31,7 @@ export const Task = (props: TaskPropsType) => {
                     onChange={onChangeHandler}/>
                 <span>{props.title}</span>
             </span>
-            <Button title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>
+            <UniversalButton title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>
         </S.StyledTask>
     );
 };
