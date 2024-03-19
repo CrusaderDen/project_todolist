@@ -8,12 +8,13 @@ import {InputTaskField} from "./todolist_Components/InputTaskField";
 import {TasksList} from "./todolist_Components/TasksList";
 
 type TodoListPropsType = {
+    todoListId: string
     title: string
     tasks: TaskType[]
-    removeTask: (taskId: string) => void
-    addTask: (newTitle: string) => void
-    changeTodoListFilter: (filter: FilterValuesType) => void
-    changeStatus: (id: string, isDone: boolean) => void
+    removeTask: (taskId: string, todolistId: string) => void
+    addTask: (newTitle: string, todolistId: string) => void
+    changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
+    changeStatus: (id: string, isDone: boolean, todolistId: string) => void
     filter: FilterValuesType
 }
 
@@ -23,11 +24,13 @@ export const TodoList = (props: TodoListPropsType) => {
     return (
         <S.StyledTodolist>
             <CloseTodoListButton/>
-            <FilterButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}/>
+            <FilterButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}
+                           todoListId={props.todoListId}/>
             <TodoListTitle title={props.title}/>
-            <InputTaskField addTask={props.addTask}/>
+            <InputTaskField addTask={props.addTask} todoListId={props.todoListId}/>
             <S.StyledTasksTitle>Task list</S.StyledTasksTitle>
-            <TasksList tasks={props.tasks} removeTask={props.removeTask} changeStatus={props.changeStatus}/>
+            <TasksList tasks={props.tasks} removeTask={props.removeTask} changeStatus={props.changeStatus}
+                       todoListId={props.todoListId}/>
         </S.StyledTodolist>
     )
 }

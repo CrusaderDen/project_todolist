@@ -4,7 +4,8 @@ import {S} from "../_styles";
 
 
 type InputTaskFieldPropsType = {
-    addTask: (newTitle: string) => void
+    todoListId: string
+    addTask: (newTitle: string, todolistId: string) => void
 }
 
 export const InputTaskField = (props: InputTaskFieldPropsType) => {
@@ -28,7 +29,7 @@ export const InputTaskField = (props: InputTaskFieldPropsType) => {
             setError('Title is required')
             return
         }
-        props.addTask(newTaskTitle.trim())
+        props.addTask(newTaskTitle.trim(), props.todoListId)
         setNewTaskTitle('')
     }
 

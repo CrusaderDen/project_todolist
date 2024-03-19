@@ -1,6 +1,7 @@
 import styled, {css} from "styled-components";
 
 const StyledButton = styled.button<any>`
+    user-select: none;
     border-radius: 3px;
     border: none;
     ${props => props.filter === props.$expectedFilter && props.$expectedFilter !== undefined && css`
@@ -31,8 +32,9 @@ const StyledTask = styled.div`
 `
 
 const StyledTodolist = styled.div`
-    background-image: linear-gradient(160deg, rgba(33, 212, 253, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);
-    box-shadow: 10px 10px 20px rgba(18, 107, 120, 0.9);
+    background-image: linear-gradient(160deg, rgba(33, 212, 253, 0.8) 0%, rgba(183, 33, 255, 0.55) 100%);
+    //box-shadow: 10px 10px 20px rgba(18, 107, 120, 0.9);
+    box-shadow: 0 0 10px 2px rgb(0, 0, 0);
     border-radius: 5px;
     padding: 20px;
     min-width: 250px;
