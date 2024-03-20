@@ -4,13 +4,13 @@ import {UniversalButton} from "./UniversalButton";
 
 type CloseTodoListButtonPropsType = {
     removeTodolist: (todolistId: string) => void
-    todoListId: string
+    todolistId: string
 }
 
 export const CloseTodoListButton = (props: CloseTodoListButtonPropsType) => {
 
     function onClickHandler() {
-        props.removeTodolist(props.todoListId)
+        props.removeTodolist(props.todolistId)
     }
 
     return (

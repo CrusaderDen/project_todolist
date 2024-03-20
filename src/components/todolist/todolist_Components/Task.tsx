@@ -3,7 +3,7 @@ import {UniversalButton} from "./UniversalButton";
 import {S} from '../_styles'
 
 type TaskPropsType = {
-    todoListId: string
+    todolistId: string
     taskId: string
     title: string
     isDone: boolean
@@ -15,11 +15,11 @@ export const Task = (props: TaskPropsType) => {
 
 
     function onRemoveHandler() {
-        props.removeTask(props.taskId, props.todoListId)
+        props.removeTask(props.taskId, props.todolistId)
     }
 
     function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
-        props.changeStatus(props.taskId, e.currentTarget.checked, props.todoListId)
+        props.changeStatus(props.taskId, e.currentTarget.checked, props.todolistId)
     }
 
 

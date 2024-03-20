@@ -55,7 +55,7 @@ const StyledTodolist = styled.div`
     box-shadow: 0 0 10px 2px rgb(0, 0, 0);
     border-radius: 5px;
     padding: 20px;
-    min-width: 250px;
+    min-width: 303px;
 
 `
 

@@ -4,7 +4,7 @@ import {TaskType} from "../../../App";
 import {Task} from "./Task";
 
 type TasksListPropsType = {
-    todoListId: string
+    todolistId: string
     tasks: TaskType[]
     removeTask: (taskId: string, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
@@ -18,7 +18,7 @@ export const TasksList = (props: TasksListPropsType) => {
             return (
                 <li key={task.id}>
                     <Task taskId={task.id} title={task.title} isDone={task.isDone} removeTask={props.removeTask}
-                          changeStatus={props.changeStatus} todoListId={props.todoListId}/>
+                          changeStatus={props.changeStatus} todolistId={props.todolistId}/>
                 </li>
             )
         })

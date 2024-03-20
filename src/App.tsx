@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./components/todolist/TodoList";
 import {v1} from "uuid";
+import {AddItemForm} from "./components/todolist/todolist_Components/AddItemForm";
 
 export type TodolistType = {
     id: string
@@ -13,6 +14,10 @@ export type TaskType = {
     id: string
     title: string
     isDone: boolean
+}
+
+export type TasksStateType = {
+    [key: string]: TaskType[]
 }
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -37,11 +42,11 @@ function App() {
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ])
 
-    const [allTasks, setAllTasks] = useState({
+    const [allTasks, setAllTasks] = useState<TasksStateType>({
         [todolistId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
-            {id: v1(), title: 'React', isDone: false},
+            {id: v1(), title: 'React', isDone: true},
             {id: v1(), title: 'Redux', isDone: false},
             {id: v1(), title: 'Next JS', isDone: false},
         ],
@@ -83,6 +88,8 @@ function App() {
 
     function removeTodolist(todolistId: string) {
         setTodolists(todolists.filter(td => td.id !== todolistId))
+        delete allTasks[todolistId]
+        setAllTasks({...allTasks})
     }
 
 
@@ -106,11 +113,15 @@ function App() {
             changeStatus,
         }
      */
-
+    function addTodolist(title: string) {
+        let newTodolist: TodolistType = {id: v1(), title: title, filter: 'all'}
+        setTodolists([newTodolist, ...todolists])
+        setAllTasks({...allTasks, [newTodolist.id]: []})
+    }
 
     return (
         <div className="App">
-
+            <AddItemForm addItem={addTodolist}/>
             {todolists.map(todoList => {
                 const getFilteredTasks = (allTasks: Array<TaskType>, currentFilter: FilterValuesType): Array<TaskType> => {
                     switch (currentFilter) {
@@ -127,7 +138,7 @@ function App() {
 
                 return <TodoList
                     key={todoList.id}
-                    todoListId={todoList.id}
+                    todolistId={todoList.id}
                     title={todoList.title}
                     tasks={filteredTasks}
                     removeTask={removeTask}

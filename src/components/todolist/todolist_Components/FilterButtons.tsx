@@ -5,7 +5,7 @@ import {FilterValuesType} from "../../../App";
 
 
 type FilterButtonsPropsType = {
-    todoListId: string
+    todolistId: string
     changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
 }
@@ -14,15 +14,15 @@ type FilterButtonsPropsType = {
 export const FilterButtons = (props: FilterButtonsPropsType) => {
 
     function onAllClickHandler() {
-        props.changeTodoListFilter('all', props.todoListId)
+        props.changeTodoListFilter('all', props.todolistId)
     }
 
     function onActiveClickHandler() {
-        props.changeTodoListFilter('active', props.todoListId)
+        props.changeTodoListFilter('active', props.todolistId)
     }
 
     function onCompletedClickHandler() {
-        props.changeTodoListFilter('completed', props.todoListId)
+        props.changeTodoListFilter('completed', props.todolistId)
     }
 
     return (
