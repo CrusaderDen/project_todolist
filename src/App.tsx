@@ -119,6 +119,14 @@ function App() {
         setAllTasks({...allTasks, [newTodolist.id]: []})
     }
 
+    function changeTaskTitle(id: string, newValue: string, todolistId: string) {
+        let task = allTasks[todolistId].find(t => id === t.id)
+        if (task) {
+            task.title = newValue
+            setAllTasks({...allTasks})
+        }
+    }
+
     return (
         <div className="App">
             <AddItemForm addItem={addTodolist}/>
@@ -146,6 +154,7 @@ function App() {
                     addTask={addTask}
                     changeTodoListFilter={changeTodoListFilter}
                     changeStatus={changeStatus}
+                    changeTaskTitle={changeTaskTitle}
                     filter={todoList.filter}
                 />
             })}

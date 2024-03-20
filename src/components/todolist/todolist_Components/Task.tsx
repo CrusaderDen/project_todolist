@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {UniversalButton} from "./UniversalButton";
 import {S} from '../_styles'
+import {EditableSpan} from "./EditableSpan";
 
 type TaskPropsType = {
     todolistId: string
@@ -9,6 +10,7 @@ type TaskPropsType = {
     isDone: boolean
     removeTask: (taskId: string, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
+    changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
 }
 
 export const Task = (props: TaskPropsType) => {
@@ -18,8 +20,12 @@ export const Task = (props: TaskPropsType) => {
         props.removeTask(props.taskId, props.todolistId)
     }
 
-    function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+    function onChangeStatusHandler(e: ChangeEvent<HTMLInputElement>) {
         props.changeStatus(props.taskId, e.currentTarget.checked, props.todolistId)
+    }
+
+    function onChangeTitleHandler(newValue: string) {
+        props.changeTaskTitle(props.taskId, newValue, props.todolistId)
     }
 
 
@@ -29,13 +35,12 @@ export const Task = (props: TaskPropsType) => {
                 <input
                     type="checkbox"
                     checked={props.isDone}
-                    onChange={onChangeHandler}/>
-                <span className={props.isDone ? 'is-done' : ''}>{props.title}</span>
+                    onChange={onChangeStatusHandler}/>
+                <EditableSpan title={props.title} isDone={props.isDone} onChange={onChangeTitleHandler}/>
+                {/*<span className={props.isDone ? 'is-done' : ''}>{props.title}</span>*/}
             </span>
             <UniversalButton title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>
         </S.StyledTask>
     );
 };
-
-
 
