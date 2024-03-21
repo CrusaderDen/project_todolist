@@ -17,6 +17,7 @@ type TodoListPropsType = {
     changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
     changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
+    changeTodolistTitle: (newTitle: string, todolistId: string) => void
     filter: FilterValuesType
 }
 
@@ -32,7 +33,7 @@ export const TodoList = (props: TodoListPropsType) => {
             <CloseTodoListButton removeTodolist={props.removeTodolist} todolistId={props.todolistId}/>
             <FilterButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}
                            todolistId={props.todolistId}/>
-            <TodoListTitle title={props.title}/>
+            <TodoListTitle title={props.title} todolistId={props.todolistId} changeTodolistTitle={props.changeTodolistTitle}/>
             <AddItemForm addItem={addTask}/>
             <S.StyledTasksTitle>Task list</S.StyledTasksTitle>
             <TasksList tasks={props.tasks} removeTask={props.removeTask} changeStatus={props.changeStatus}

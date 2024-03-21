@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 
 type EditableSpanPropsType = {
     title: string
-    isDone: boolean
+    isDone?: boolean
     onChange: (newValue: string) => void
 }
 
