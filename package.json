@@ -4,6 +4,11 @@
   "private": true,
   "homepage": "https://CrusaderDen.github.io/project_todolist",
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.12",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/material": "^5.15.14",
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",

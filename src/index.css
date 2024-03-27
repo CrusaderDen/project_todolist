@@ -9,7 +9,14 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #cecece;
+    background-color: #d6d6d6;
+    /*min-width: 400px;*/
+}
+
+@media screen and (max-width: 500px) {
+    body {
+        max-width: 500px;
+    }
 }
 
 code {

@@ -2,6 +2,8 @@ import React, {ChangeEvent} from 'react';
 import {UniversalButton} from "./UniversalButton";
 import {S} from '../_styles'
 import {EditableSpan} from "./EditableSpan";
+import {Checkbox, IconButton} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type TaskPropsType = {
     todolistId: string
@@ -32,13 +34,18 @@ export const Task = (props: TaskPropsType) => {
     return (
         <S.StyledTask>
             <span>
-                <input
-                    type="checkbox"
+                <Checkbox
                     checked={props.isDone}
-                    onChange={onChangeStatusHandler}/>
+                    onChange={onChangeStatusHandler}
+                    color="secondary"
+                    size={"medium"}
+                />
                 <EditableSpan title={props.title} isDone={props.isDone} onChange={onChangeTitleHandler}/>
             </span>
-            <UniversalButton title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>
+            {/*<UniversalButton title={'x'} taskId={props.taskId} onClickHandler={onRemoveHandler}/>*/}
+            <IconButton aria-label="delete" onClick={onRemoveHandler}>
+                <DeleteIcon/>
+            </IconButton>
         </S.StyledTask>
     );
 };

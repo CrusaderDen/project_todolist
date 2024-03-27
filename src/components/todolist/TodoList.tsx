@@ -6,6 +6,8 @@ import {CloseTodoListButton} from "./todolist_Components/CloseTodoListButton";
 import {FilterButtons} from "./todolist_Components/FilterButtons";
 import {TasksList} from "./todolist_Components/TasksList";
 import {AddItemForm} from "./todolist_Components/AddItemForm";
+import {Button, Stack, TextField} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type TodoListPropsType = {
     todolistId: string
@@ -30,11 +32,17 @@ export const TodoList = (props: TodoListPropsType) => {
 
     return (
         <S.StyledTodolist>
-            <CloseTodoListButton removeTodolist={props.removeTodolist} todolistId={props.todolistId}/>
+            {/*<CloseTodoListButton removeTodolist={props.removeTodolist} todolistId={props.todolistId}/>*/}
+            <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center">
+                <Button color={"secondary"} variant="text" startIcon={<DeleteIcon/>} onClick={() => props.removeTodolist(props.todolistId)}>Delete</Button>
+            </Stack>
             <FilterButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}
                            todolistId={props.todolistId}/>
             <TodoListTitle title={props.title} todolistId={props.todolistId} changeTodolistTitle={props.changeTodolistTitle}/>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} placeholder={'New task'} variant={'outlined'}/>
             <S.StyledTasksTitle>Task list</S.StyledTasksTitle>
             <TasksList tasks={props.tasks} removeTask={props.removeTask} changeStatus={props.changeStatus}
                        todolistId={props.todolistId} changeTaskTitle={props.changeTaskTitle}/>
