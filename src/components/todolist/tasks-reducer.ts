@@ -30,7 +30,12 @@ type ChangeTaskStatusActionType = {
     isDone: boolean
 }
 
-export type TaskActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskTitleActionType | ChangeTaskStatusActionType
+type SetAllTasksActionType = {
+    type: 'SET_ALL_TASKS',
+    [key: string]: any
+}
+
+export type TaskActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskTitleActionType | ChangeTaskStatusActionType | SetAllTasksActionType
 
 
 export const RemoveTaskAC = (todolistId: string, taskId: string) => {
@@ -67,6 +72,11 @@ export const ChangeTaskStatusAC = (todolistId: string, taskId: string, isDone: b
     }
 }
 
+export const SetAllTasksAC = (newAllTasks: any) => ({
+    type: 'SET_ALL_TASKS' as const,
+    newAllTasks
+})
+
 export const tasksReducer = (state: TasksStateType, action: TaskActionsType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
@@ -86,6 +96,8 @@ export const tasksReducer = (state: TasksStateType, action: TaskActionsType): Ta
             const changeStatusCurrentTack = changeStatusTasks.find(t => t.id === action.taskId)
             if (changeStatusCurrentTack) changeStatusCurrentTack.isDone = action.isDone
             return {...state}
+        case 'SET_ALL_TASKS':
+            return {...state, ...action.newAllTasks}
         default:
             throw new Error('Unknown action type')
     }

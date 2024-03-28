@@ -4,7 +4,7 @@ import {TodoList} from "./components/todolist/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/todolist/todolist_Components/AddItemForm";
 import {AddTodolistAC, ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC, todolistsReducer} from "./components/todolist/todolists-reducer";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC, tasksReducer} from "./components/todolist/tasks-reducer";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC, SetAllTasksAC, tasksReducer} from "./components/todolist/tasks-reducer";
 
 export type TodolistType = {
     id: string
@@ -82,6 +82,7 @@ function App() {
     function addTodolist(title: string) {
         const todolistId = v1()
         // setAllTasks({...allTasks, [todolistId]: []})
+        dispatchAllTasks(SetAllTasksAC({...allTasks, [todolistId]: []}))
         dispatchTodolists(AddTodolistAC(todolistId, title))
     }
 
