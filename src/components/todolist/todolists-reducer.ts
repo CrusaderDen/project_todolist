@@ -1,14 +1,15 @@
 import {FilterValuesType, TodolistType} from "../../App";
+import {v1} from "uuid";
 
 
-type RemoveTodolistActionType = {
+export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
     id: string
 }
-type AddTodolistActionType = {
+export type AddTodolistActionType = {
     type: 'ADD-TODOLIST'
-    id: string
     title: string
+    todolistId: string
 }
 type ChangeTodolistTitleActionType = {
     type: 'CHANGE-TODOLIST-TITLE'
@@ -21,14 +22,18 @@ type ChangeTodolistFilterActionType = {
     filter: FilterValuesType
 }
 
-export type ActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType
+export type ActionsType = RemoveTodolistActionType
+    | AddTodolistActionType
+    | ChangeTodolistTitleActionType
+    | ChangeTodolistFilterActionType
+
 
 export const todolistsReducer = (state: TodolistType[], action: ActionsType): TodolistType[] => {
     switch (action.type) {
         case'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.id)
         case'ADD-TODOLIST':
-            const newTodolist: TodolistType = {id: action.id, title: action.title, filter: 'all'}
+            const newTodolist: TodolistType = {id: action.todolistId, title: action.title, filter: 'all'}
             return [newTodolist, ...state]
         case 'CHANGE-TODOLIST-TITLE':
             const changedTodolist = state.find(tl => tl.id === action.id)
@@ -44,15 +49,15 @@ export const todolistsReducer = (state: TodolistType[], action: ActionsType): To
 }
 
 
-export const RemoveTodolistAC = (todolistId: string) => {
+export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST' as const, id: todolistId}
 }
 
-export const AddTodolistAC = (newTodolistId: string, newTitle: string) => {
+export const AddTodolistAC = (newTitle: string) => {
     return {
         type: 'ADD-TODOLIST' as const,
-        id: newTodolistId,
-        title: newTitle
+        title: newTitle,
+        todolistId: v1()
     }
 }
 
