@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {UniversalButton} from "./UniversalButton";
-import {S} from '../_styles'
+import {S} from './_styles'
 import {EditableSpan} from "./EditableSpan";
 import {Checkbox, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';

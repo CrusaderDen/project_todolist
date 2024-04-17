@@ -1,5 +1,5 @@
 import React from 'react';
-import {S} from "../_styles";
+import {S} from "./_styles";
 import {UniversalButton} from "./UniversalButton";
 
 type CloseTodoListButtonPropsType = {

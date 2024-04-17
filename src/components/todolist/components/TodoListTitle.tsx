@@ -1,5 +1,5 @@
 import React from 'react';
-import {S} from '../_styles'
+import {S} from './_styles'
 import {EditableSpan} from "./EditableSpan";
 
 type TodoListHeaderPropsType = {

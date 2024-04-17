@@ -1,11 +1,11 @@
 import React from "react";
-import {TodoListTitle} from "./todolist_Components/TodoListTitle";
-import {FilterValuesType, TaskType} from "../../App";
+import {TodoListTitle} from "./TodoListTitle";
+import {FilterValuesType, TaskType} from "../../../App";
 import {S} from './_styles'
-import {CloseTodoListButton} from "./todolist_Components/CloseTodoListButton";
-import {FilterButtons} from "./todolist_Components/FilterButtons";
-import {TasksList} from "./todolist_Components/TasksList";
-import {AddItemForm} from "./todolist_Components/AddItemForm";
+import {CloseTodoListButton} from "./CloseTodoListButton";
+import {FilterButtons} from "./FilterButtons";
+import {TasksList} from "./TasksList";
+import {AddItemForm} from "./AddItemForm";
 import {Button, Stack, TextField} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
