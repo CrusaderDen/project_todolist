@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {S} from './_styles'
 import {EditableSpan} from "./EditableSpan";
 
@@ -9,9 +9,10 @@ type TodoListHeaderPropsType = {
 }
 
 export const TodoListTitle = (props: TodoListHeaderPropsType) => {
-    function onChangeTitleHandler(newValue: string) {
+
+    const onChangeTitleHandler = useCallback((newValue: string) => {
         props.changeTodolistTitle(newValue, props.todolistId)
-    }
+    }, [props.todolistId])
 
     return (
         <S.StyledHeader>

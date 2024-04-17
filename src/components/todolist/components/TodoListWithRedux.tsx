@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useMemo} from "react";
 import {TodoListTitle} from "./TodoListTitle";
 import {FilterValuesType, TaskType} from "../../../App";
 import {S} from './_styles'
@@ -15,20 +15,6 @@ import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "..
 import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "../state/todolists-reducer";
 import {FilterButtonsWithRedux} from "./FilterButtonsWithRedux";
 
-// type TodoListPropsType = {
-//     todolistId: string
-//     title: string
-//     tasks: TaskType[]
-//     removeTask: (taskId: string, todolistId: string) => void
-//     removeTodolist: (todolistId: string) => void
-//     addTask: (newTitle: string, todolistId: string) => void
-//     changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
-//     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
-//     changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
-//     changeTodolistTitle: (newTitle: string, todolistId: string) => void
-//     filter: FilterValuesType
-// }
-
 type TodoListPropsType = {
     todolistId: string
     title: string
@@ -41,36 +27,29 @@ export const TodoListWithRedux = (props: TodoListPropsType) => {
     let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todolistId])
     const dispatch = useDispatch()
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(AddTaskAC(props.todolistId, title))
-    }
-
-    // const getFilteredTasks = (tasks: Array<TaskType>, currentFilter: FilterValuesType): Array<TaskType> => {
-    //     switch (currentFilter) {
-    //         case 'active' :
-    //             return tasks.filter(t => !t.isDone)
-    //         case 'completed':
-    //             return tasks.filter(t => t.isDone)
-    //         default:
-    //             return tasks
-    //     }
-    // }
+    }, [props.todolistId, dispatch])
 
     const removeTodolist = () => dispatch(RemoveTodolistAC(props.todolistId))
     const changeTodolistTitle = (title: string) => dispatch(ChangeTodolistTitleAC(props.todolistId, title))
-    const removeTask = (taskId: string, todolistId: string) => dispatch(RemoveTaskAC(todolistId, taskId))
-    const changeTaskTitle = (id: string, newValue: string, todolistId: string) => dispatch(ChangeTaskTitleAC(todolistId, id, newValue))
-    const changeStatus = (id: string, isDone: boolean, todolistId: string) => dispatch(ChangeTaskStatusAC(todolistId, id, isDone))
+    const removeTask = useCallback((taskId: string, todolistId: string) => dispatch(RemoveTaskAC(todolistId, taskId)), [dispatch])
+    const changeTaskTitle = useCallback((id: string, newValue: string, todolistId: string) => dispatch(ChangeTaskTitleAC(todolistId, id, newValue)), [dispatch])
+    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => dispatch(ChangeTaskStatusAC(todolistId, id, isDone)), [dispatch])
 
-    if (props.filter === 'active') {
-        tasks = tasks.filter(t => t.isDone === false)
-    } else if (props.filter === 'completed') {
-        tasks = tasks.filter(t => t.isDone === true)
-    }
+
+    tasks = useMemo(() => {
+        if (props.filter === 'active') {
+            tasks = tasks.filter(t => !t.isDone)
+        } else if (props.filter === 'completed') {
+            tasks = tasks.filter(t => t.isDone)
+        }
+        return tasks
+    }, [props.filter, tasks])
+
 
     return (
         <S.StyledTodolist>
-            {/*<CloseTodoListButton removeTodolist={props.removeTodolist} todolistId={props.todolistId}/>*/}
             <Stack
                 direction="row"
                 justifyContent="center"

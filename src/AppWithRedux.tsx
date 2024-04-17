@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {AddItemForm} from "./components/todolist/components/AddItemForm";
 import {AddTodolistAC, ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "./components/todolist/state/todolists-reducer";
@@ -26,16 +26,14 @@ function AppWithRedux() {
 
 
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
-    // const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
-    const addTodolist = (title: string) => dispatch(AddTodolistAC(title))
+    const addTodolist = useCallback((title: string) => dispatch(AddTodolistAC(title)), [dispatch])
 
     return (
         <div className="App">
             <AddItemForm addItem={addTodolist} placeholder={'Create a new todolist'} variant={"standard"}/>
             {todolists.map(todoList => {
-                // let allTodolistTasks = tasks[todoList.id]
 
                 return <TodoListWithRedux
                     key={todoList.id}

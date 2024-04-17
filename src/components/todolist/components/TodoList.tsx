@@ -1,8 +1,7 @@
-import React from "react";
+import React, {memo} from "react";
 import {TodoListTitle} from "./TodoListTitle";
 import {FilterValuesType, TaskType} from "../../../App";
 import {S} from './_styles'
-import {CloseTodoListButton} from "./CloseTodoListButton";
 import {FilterButtons} from "./FilterButtons";
 import {TasksList} from "./TasksList";
 import {AddItemForm} from "./AddItemForm";
@@ -24,7 +23,7 @@ type TodoListPropsType = {
 }
 
 
-export const TodoList = (props: TodoListPropsType) => {
+export const TodoList = memo((props: TodoListPropsType) => {
 
     const addTask = (title: string) => {
         props.addTask(title, props.todolistId)
@@ -32,7 +31,6 @@ export const TodoList = (props: TodoListPropsType) => {
 
     return (
         <S.StyledTodolist>
-            {/*<CloseTodoListButton removeTodolist={props.removeTodolist} todolistId={props.todolistId}/>*/}
             <Stack
                 direction="row"
                 justifyContent="center"
@@ -48,7 +46,7 @@ export const TodoList = (props: TodoListPropsType) => {
                        todolistId={props.todolistId} changeTaskTitle={props.changeTaskTitle}/>
         </S.StyledTodolist>
     )
-}
+})
 
 
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {S} from "./_styles";
 import {TaskType} from "../../../App";
 import {Task} from "./Task";
+import {TaskWithRedux} from "./TaskWithRedux";
 
 type TasksListPropsType = {
     todolistId: string
@@ -18,15 +19,17 @@ export const TasksList = (props: TasksListPropsType) => {
         : props.tasks.map((task: TaskType) => {
             return (
                 <li key={task.id}>
-                    <Task taskId={task.id} title={task.title} isDone={task.isDone} removeTask={props.removeTask}
-                          changeStatus={props.changeStatus} todolistId={props.todolistId} changeTaskTitle={props.changeTaskTitle}/>
+                    {/*<Task task={task}*/}
+                    {/*      removeTask={props.removeTask}*/}
+                    {/*      changeStatus={props.changeStatus}*/}
+                    {/*      todolistId={props.todolistId}*/}
+                    {/*      changeTaskTitle={props.changeTaskTitle}/>*/}
+                    <TaskWithRedux todolistId={props.todolistId} taskId={task.id}/>
                 </li>
             )
         })
 
     return (
-        <S.StyledTaskList>
-            {tasksList}
-        </S.StyledTaskList>
+        <S.StyledTaskList> {tasksList} </S.StyledTaskList>
     );
 };

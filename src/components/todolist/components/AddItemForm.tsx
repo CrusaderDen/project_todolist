@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import {IconButton, Stack, TextField, TextFieldVariants} from "@mui/material";
 
@@ -9,16 +9,16 @@ type AddItemFormPropsType = {
 }
 
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
 
     function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        setError(null)
         setTitle(event.currentTarget.value)
     }
 
     function onKeyUpHandler(e: KeyboardEvent<HTMLInputElement>) {
+        if (error) setError(null)
         if (e.code === 'Enter' || e.code === 'NumpadEnter') {
             addTaskHandler()
         }
@@ -56,19 +56,6 @@ export function AddItemForm(props: AddItemFormPropsType) {
             <IconButton size="large" color="secondary" aria-label="add an alarm" onClick={() => addTaskHandler()}>
                 <AddBoxOutlinedIcon fontSize="large"/>
             </IconButton>
-            {/*<S.StyledInput*/}
-            {/*    placeholder={'New task'}*/}
-            {/*    value={title}*/}
-            {/*    onChange={onChangeHandler}*/}
-            {/*    onKeyUp={onKeyUpHandler}*/}
-            {/*/>*/}
-            {/*<UniversalButton*/}
-            {/*    title={'+'}*/}
-            {/*    onClickHandler={() => {*/}
-            {/*        addTaskHandler()*/}
-            {/*    }*/}
-            {/*    }/>*/}
-            {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </Stack>
     )
-}
+})

@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 import './App.css';
 import {TodoList} from "./components/todolist/components/TodoList";
 import {v1} from "uuid";
@@ -49,41 +49,41 @@ function App() {
         ],
     })
 
-    function removeTodolist(todolistId: string) {
+    const removeTodolist = useCallback((todolistId: string) => {
         const action = RemoveTodolistAC(todolistId)
         dispatchToTodolists(action)
         dispatchToTasks(action)
-    }
+    }, [])
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         const action = AddTodolistAC(title)
         dispatchToTodolists(action)
         dispatchToTasks(action)
-    }
+    }, [])
 
-    function changeTodolistTitle(newValue: string, todolistId: string) {
+    const changeTodolistTitle = useCallback((newValue: string, todolistId: string) => {
         dispatchToTodolists(ChangeTodolistTitleAC(todolistId, newValue))
-    }
+    }, [])
 
-    function changeTodoListFilter(filter: FilterValuesType, todolistId: string) {
+    const changeTodoListFilter = useCallback((filter: FilterValuesType, todolistId: string) => {
         dispatchToTodolists(ChangeTodolistFilterAC(todolistId, filter))
-    }
+    }, [])
 
-    function removeTask(taskId: string, todolistId: string) {
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
         dispatchToTasks(RemoveTaskAC(todolistId, taskId))
-    }
+    }, [])
 
-    function addTask(taskTitle: string, todolistId: string) {
+    const addTask = useCallback((taskTitle: string, todolistId: string) => {
         dispatchToTasks(AddTaskAC(todolistId, taskTitle))
-    }
+    }, [])
 
-    function changeTaskTitle(id: string, newValue: string, todolistId: string) {
+    const changeTaskTitle = useCallback((id: string, newValue: string, todolistId: string) => {
         dispatchToTasks(ChangeTaskTitleAC(todolistId, id, newValue))
-    }
+    }, [])
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => {
         dispatchToTasks(ChangeTaskStatusAC(todolistId, id, isDone))
-    }
+    }, [])
 
 //--------------
 
