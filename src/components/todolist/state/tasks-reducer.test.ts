@@ -5,6 +5,7 @@ import {TasksStateType} from "../../../App";
 
 let startState: TasksStateType
 
+
 beforeEach(() => {
     startState = {
         todolistId1: [
