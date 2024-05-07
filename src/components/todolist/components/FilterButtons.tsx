@@ -1,28 +1,30 @@
 import React from 'react';
 import {S} from "./_styles";
 import {UniversalButton} from "./UniversalButton";
+import {ChangeTodolistFilterAC} from "../state/todolists-reducer";
+import {useDispatch} from "react-redux";
 import {FilterValuesType} from "../../../App";
 
 
 type FilterButtonsPropsType = {
     todolistId: string
-    changeTodoListFilter: (filter: FilterValuesType, todolistId: string) => void
     filter: FilterValuesType
 }
 
 
 export const FilterButtons = (props: FilterButtonsPropsType) => {
+    const dispatch = useDispatch()
 
     function onAllClickHandler() {
-        props.changeTodoListFilter('all', props.todolistId)
+        dispatch(ChangeTodolistFilterAC(props.todolistId, 'all'))
     }
 
     function onActiveClickHandler() {
-        props.changeTodoListFilter('active', props.todolistId)
+        dispatch(ChangeTodolistFilterAC(props.todolistId, 'active'))
     }
 
     function onCompletedClickHandler() {
-        props.changeTodoListFilter('completed', props.todolistId)
+        dispatch(ChangeTodolistFilterAC(props.todolistId, 'completed'))
     }
 
     return (

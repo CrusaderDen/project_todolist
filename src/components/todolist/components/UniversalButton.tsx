@@ -1,6 +1,6 @@
 import React from 'react';
-import {FilterValuesType} from "../../../App";
 import {S} from './_styles'
+import {FilterValuesType} from "../../../App";
 
 type ButtonPropsType = {
     title: string

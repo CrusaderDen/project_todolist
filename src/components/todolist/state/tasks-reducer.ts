@@ -1,22 +1,8 @@
-import {TasksStateType} from "../../../App";
 import {v1} from "uuid";
 import {AddTodolistActionType, RemoveTodolistActionType, todolistId1, todolistId2} from "./todolists-reducer";
+import {TasksStateType} from "../../../App";
 
-
-//---------Types
-type RemoveTaskActionType = ReturnType<typeof RemoveTaskAC>
-type AddTaskActionType = ReturnType<typeof AddTaskAC>
-type ChangeTaskTitleActionType = ReturnType<typeof ChangeTaskTitleAC>
-type ChangeTaskStatusActionType = ReturnType<typeof ChangeTaskStatusAC>
-//---------Common type
-export type TaskActionsType = RemoveTaskActionType
-    | AddTaskActionType
-    | ChangeTaskTitleActionType
-    | ChangeTaskStatusActionType
-    | AddTodolistActionType
-    | RemoveTodolistActionType
-//---------Reducer
-
+//---------Initial state
 const initialState: TasksStateType = {
     [todolistId1]: [
         {id: v1(), title: 'HTML&CSS', isDone: true},
@@ -31,7 +17,7 @@ const initialState: TasksStateType = {
         {id: v1(), title: 'Чипсы', isDone: true},
     ],
 }
-
+//---------Reducer
 export const tasksReducer = (state = initialState, action: TaskActionsType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
@@ -70,41 +56,20 @@ export const tasksReducer = (state = initialState, action: TaskActionsType): Tas
     }
 
 }
-
 //---------Action creators
-export const RemoveTaskAC = (todolistId: string, taskId: string) => {
-    return {
-        type: 'REMOVE-TASK' as const,
-        todolistId: todolistId,
-        taskId: taskId
-    } as const
-}
+export const RemoveTaskAC = (todolistId: string, taskId: string) => ({type: 'REMOVE-TASK', todolistId, taskId} as const)
+export const AddTaskAC = (todolistId: string, title: string) => ({type: 'ADD-TASK', todolistId, title} as const)
+export const ChangeTaskTitleAC = (todolistId: string, taskId: string, title: string) => ({type: 'CHANGE-TASK-TITLE', todolistId, taskId, title} as const)
+export const ChangeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean) => ({type: 'CHANGE-TASK-STATUS', todolistId, taskId, isDone} as const)
+//---------AC Types
+export type TaskActionsType
+    = ReturnType<typeof RemoveTaskAC>
+    | ReturnType<typeof AddTaskAC>
+    | ReturnType<typeof ChangeTaskTitleAC>
+    | ReturnType<typeof ChangeTaskStatusAC>
+    | AddTodolistActionType
+    | RemoveTodolistActionType
 
-export const AddTaskAC = (todolistId: string, title: string) => {
-    return {
-        type: 'ADD-TASK' as const,
-        todolistId: todolistId,
-        title: title
-    } as const
-}
-
-export const ChangeTaskTitleAC = (todolistId: string, taskId: string, title: string) => {
-    return {
-        type: 'CHANGE-TASK-TITLE' as const,
-        todolistId: todolistId,
-        taskId: taskId,
-        title: title,
-    } as const
-}
-
-export const ChangeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean) => {
-    return {
-        type: 'CHANGE-TASK-STATUS' as const,
-        todolistId: todolistId,
-        taskId: taskId,
-        isDone: isDone
-    } as const
-}
 
 
 

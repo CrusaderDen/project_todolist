@@ -1,8 +1,7 @@
 import React from 'react';
 import {S} from "./_styles";
-import {TaskType} from "../../../App";
 import {Task} from "./Task";
-import {TaskWithRedux} from "./TaskWithRedux";
+import {TaskType} from "../../../App";
 
 type TasksListPropsType = {
     todolistId: string
@@ -24,7 +23,7 @@ export const TasksList = (props: TasksListPropsType) => {
                     {/*      changeStatus={props.changeStatus}*/}
                     {/*      todolistId={props.todolistId}*/}
                     {/*      changeTaskTitle={props.changeTaskTitle}/>*/}
-                    <TaskWithRedux todolistId={props.todolistId} taskId={task.id}/>
+                    <Task todolistId={props.todolistId} taskId={task.id}/>
                 </li>
             )
         })

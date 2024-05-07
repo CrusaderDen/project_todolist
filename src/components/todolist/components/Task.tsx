@@ -1,24 +1,26 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
-import {UniversalButton} from "./UniversalButton";
 import {S} from './_styles'
 import {EditableSpan} from "./EditableSpan";
 import {Checkbox, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {useDispatch, useSelector} from "react-redux";
+import {ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../state/tasks-reducer";
+import {AppRootStateType} from "../state/store";
 import {TaskType} from "../../../App";
 
 type TaskPropsType = {
-    task: TaskType
+    taskId: string
     todolistId: string
-    removeTask: (taskId: string, todolistId: string) => void
-    changeStatus: (id: string, isDone: boolean, todolistId: string) => void
-    changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
 }
 
-export const Task = memo(({task, todolistId, removeTask, changeStatus, changeTaskTitle}: TaskPropsType) => {
-    console.log('Task')
-    const onRemoveHandler = () => removeTask(task.id, todolistId)
-    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeStatus(task.id, e.currentTarget.checked, todolistId)
-    const onChangeTitleHandler = (newValue: string) => changeTaskTitle(task.id, newValue, todolistId)
+export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
+
+    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todolistId].filter((t: { id: string; }) => t.id === taskId)[0] as TaskType)
+
+    const dispatch = useDispatch()
+    const onRemoveHandler = () => dispatch(RemoveTaskAC(todolistId, taskId))
+    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(ChangeTaskStatusAC(todolistId, taskId, e.currentTarget.checked))
+    const onChangeTitleHandler = useCallback((title: string) => dispatch(ChangeTaskTitleAC(todolistId, taskId, title)), [dispatch, todolistId, taskId])
 
     return (
         <S.StyledTask>
