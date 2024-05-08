@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {AddItemForm} from "./components/todolist/components/AddItemForm";
+import {AddTodolistForm} from "./AddTodolistForm";
 import {AddTodolistAC} from "./components/todolist/state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./components/todolist/state/store";
@@ -33,7 +33,7 @@ function App() {
     return (
         <div className="App">
             <Clock/>
-            <AddItemForm addItem={addTodolist} placeholder={'Create a new todolist'} variant={"standard"}/>
+            <AddTodolistForm addItem={addTodolist} placeholder={'Create a new todolist'} variant={"standard"}/>
             {todolists.map(todoList => {
 
                 return <TodoList

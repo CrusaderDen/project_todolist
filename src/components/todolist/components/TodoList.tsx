@@ -3,7 +3,7 @@ import {TodoListTitle} from "./TodoListTitle";
 import {S} from './_styles'
 import {FilterButtons} from "./FilterButtons";
 import {TasksList} from "./TasksList";
-import {AddItemForm} from "./AddItemForm";
+import {AddTodolistForm} from "../../../AddTodolistForm";
 import {Button, Stack} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch} from "react-redux";
@@ -41,7 +41,7 @@ export const TodoList = ({todolistId, title, filter}: TodoListPropsType) => {
             <FilterButtons filter={filter}
                            todolistId={todolistId}/>
             <TodoListTitle title={title} todolistId={todolistId} changeTodolistTitle={changeTodolistTitle}/>
-            <AddItemForm addItem={addTask} placeholder={'New task'} variant={'outlined'}/>
+            <AddTodolistForm addItem={addTask} placeholder={'New task'} variant={'outlined'}/>
             <S.StyledTasksTitle>Task list</S.StyledTasksTitle>
             <TasksList todolistId={todolistId} filter={filter}/>
         </S.StyledTodolist>

@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import {IconButton, Stack, TextField, TextFieldVariants} from "@mui/material";
+import {api} from "./api/api";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -9,12 +10,14 @@ type AddItemFormPropsType = {
 }
 
 
-export const AddItemForm = memo((props: AddItemFormPropsType) => {
+export const AddTodolistForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
+    const [ids, setIds] = useState([])
 
     function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
         setTitle(event.currentTarget.value)
+        setError('')
     }
 
     function onKeyUpHandler(e: KeyboardEvent<HTMLInputElement>) {
@@ -33,7 +36,6 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         setTitle('')
     }
 
-
     return (
         <Stack
             direction="row"
@@ -42,15 +44,18 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             spacing={2}
         >
             <div style={{width: '80%', display: 'inline-block'}}>
+
                 <TextField
                     fullWidth
-                    id="outlined-basic"
+                    // id="outlined-basic"
                     label={props.placeholder}
                     variant={props.variant}
                     color="secondary"
                     value={title}
                     onChange={onChangeHandler}
-                    onKeyUp={onKeyUpHandler}
+                    onKeyDown={onKeyUpHandler}
+                    error={!!error}
+                    helperText={error}
                 />
             </div>
             <IconButton size="large" color="secondary" aria-label="add an alarm" onClick={() => addTaskHandler()}>

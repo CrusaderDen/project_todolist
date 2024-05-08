@@ -13,7 +13,19 @@ type TaskPropsType = {
     todolistId: string
 }
 
+
 export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
+    // function useTask() {
+    //     let task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todolistId].filter((t: { id: string }) => t.id === taskId)[0])
+    //     const dispatch = useDispatch()
+    //
+    //     const onRemoveHandler = useCallback(() => dispatch(RemoveTaskAC(todolistId, taskId)), [dispatch])
+    //     const onChangeStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(ChangeTaskStatusAC(todolistId, taskId, e.currentTarget.checked)), [dispatch])
+    //     const onChangeTitleHandler = useCallback((title: string) => dispatch(ChangeTaskTitleAC(todolistId, taskId, title)), [dispatch])
+    //     return [task, onRemoveHandler, onChangeStatusHandler, onChangeTitleHandler] as const
+    // }
+    //
+    // [task, onRemoveHandler, onChangeStatusHandler, onChangeTitleHandler] = useTask()
 
     let task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todolistId].filter((t: { id: string }) => t.id === taskId)[0])
     const dispatch = useDispatch()
