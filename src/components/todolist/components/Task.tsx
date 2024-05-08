@@ -1,6 +1,6 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import {S} from './_styles'
-import {EditableSpan} from "./EditableSpan";
+import {EditableField} from "./EditableField";
 import {Checkbox, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch, useSelector} from "react-redux";
@@ -15,12 +15,13 @@ type TaskPropsType = {
 
 export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
 
-    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todolistId].filter((t: { id: string; }) => t.id === taskId)[0] as TaskType)
-
+    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todolistId].filter((t: { id: string }) => t.id === taskId)[0])
     const dispatch = useDispatch()
-    const onRemoveHandler = () => dispatch(RemoveTaskAC(todolistId, taskId))
-    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(ChangeTaskStatusAC(todolistId, taskId, e.currentTarget.checked))
-    const onChangeTitleHandler = useCallback((title: string) => dispatch(ChangeTaskTitleAC(todolistId, taskId, title)), [dispatch, todolistId, taskId])
+
+    const onRemoveHandler = useCallback(() => dispatch(RemoveTaskAC(todolistId, taskId)), [dispatch])
+    const onChangeStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(ChangeTaskStatusAC(todolistId, taskId, e.currentTarget.checked)), [dispatch])
+    const onChangeTitleHandler = useCallback((title: string) => dispatch(ChangeTaskTitleAC(todolistId, taskId, title)), [dispatch])
+
 
     return (
         <S.StyledTask>
@@ -31,7 +32,7 @@ export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
                     color="secondary"
                     size={"medium"}
                 />
-                <EditableSpan title={task.title} isDone={task.isDone} onChange={onChangeTitleHandler}/>
+                <EditableField title={task.title} isDone={task.isDone} onChange={onChangeTitleHandler}/>
             </span>
             <IconButton aria-label="delete" onClick={onRemoveHandler}>
                 <DeleteIcon/>

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from "react";
+import React, {useCallback} from "react";
 import {TodoListTitle} from "./TodoListTitle";
 import {S} from './_styles'
 import {FilterButtons} from "./FilterButtons";
@@ -6,11 +6,10 @@ import {TasksList} from "./TasksList";
 import {AddItemForm} from "./AddItemForm";
 import {Button, Stack} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../state/tasks-reducer";
+import {useDispatch} from "react-redux";
+import {AddTaskAC} from "../state/tasks-reducer";
 import {ChangeTodolistTitleAC, RemoveTodolistAC} from "../state/todolists-reducer";
-import {FilterValuesType, TaskType} from "../../../App";
+import {FilterValuesType} from "../../../App";
 
 type TodoListPropsType = {
     todolistId: string
@@ -19,30 +18,16 @@ type TodoListPropsType = {
 }
 
 
-export const TodoList = (props: TodoListPropsType) => {
+export const TodoList = ({todolistId, title, filter}: TodoListPropsType) => {
 
-    let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todolistId])
+
     const dispatch = useDispatch()
 
+    const removeTodolist = () => dispatch(RemoveTodolistAC(todolistId))
+    const changeTodolistTitle = (title: string) => dispatch(ChangeTodolistTitleAC(todolistId, title))
     const addTask = useCallback((title: string) => {
-        dispatch(AddTaskAC(props.todolistId, title))
-    }, [props.todolistId, dispatch])
-
-    const removeTodolist = () => dispatch(RemoveTodolistAC(props.todolistId))
-    const changeTodolistTitle = (title: string) => dispatch(ChangeTodolistTitleAC(props.todolistId, title))
-    const removeTask = useCallback((taskId: string, todolistId: string) => dispatch(RemoveTaskAC(todolistId, taskId)), [dispatch])
-    const changeTaskTitle = useCallback((id: string, newValue: string, todolistId: string) => dispatch(ChangeTaskTitleAC(todolistId, id, newValue)), [dispatch])
-    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => dispatch(ChangeTaskStatusAC(todolistId, id, isDone)), [dispatch])
-
-
-    tasks = useMemo(() => {
-        if (props.filter === 'active') {
-            tasks = tasks.filter(t => !t.isDone)
-        } else if (props.filter === 'completed') {
-            tasks = tasks.filter(t => t.isDone)
-        }
-        return tasks
-    }, [props.filter, tasks])
+        dispatch(AddTaskAC(todolistId, title))
+    }, [todolistId, dispatch])
 
 
     return (
@@ -53,13 +38,12 @@ export const TodoList = (props: TodoListPropsType) => {
                 alignItems="center">
                 <Button color={"secondary"} variant="text" startIcon={<DeleteIcon/>} onClick={() => removeTodolist()}>Delete</Button>
             </Stack>
-            <FilterButtons filter={props.filter}
-                           todolistId={props.todolistId}/>
-            <TodoListTitle title={props.title} todolistId={props.todolistId} changeTodolistTitle={changeTodolistTitle}/>
+            <FilterButtons filter={filter}
+                           todolistId={todolistId}/>
+            <TodoListTitle title={title} todolistId={todolistId} changeTodolistTitle={changeTodolistTitle}/>
             <AddItemForm addItem={addTask} placeholder={'New task'} variant={'outlined'}/>
             <S.StyledTasksTitle>Task list</S.StyledTasksTitle>
-            <TasksList tasks={tasks} removeTask={removeTask} changeStatus={changeStatus}
-                       todolistId={props.todolistId} changeTaskTitle={changeTaskTitle}/>
+            <TasksList todolistId={todolistId} filter={filter}/>
         </S.StyledTodolist>
     )
 }

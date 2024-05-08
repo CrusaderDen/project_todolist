@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {S} from './_styles'
-import {EditableSpan} from "./EditableSpan";
+import {EditableField} from "./EditableField";
 
 type TodoListHeaderPropsType = {
     title: string
@@ -17,7 +17,7 @@ export const TodoListTitle = (props: TodoListHeaderPropsType) => {
     return (
         <S.StyledHeader>
             <S.StyledTaskTitle>
-                <EditableSpan title={props.title} onChange={onChangeTitleHandler}/>
+                <EditableField title={props.title} onChange={onChangeTitleHandler}/>
             </S.StyledTaskTitle>
         </S.StyledHeader>
     );

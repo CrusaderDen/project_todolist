@@ -1,34 +1,30 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {S} from "./_styles";
 import {Task} from "./Task";
-import {TaskType} from "../../../App";
+import {FilterValuesType, TaskType} from "../../../App";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../state/store";
 
 type TasksListPropsType = {
     todolistId: string
-    tasks: TaskType[]
-    removeTask: (taskId: string, todolistId: string) => void
-    changeStatus: (id: string, isDone: boolean, todolistId: string) => void
-    changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
+    filter: FilterValuesType
 }
 
 export const TasksList = (props: TasksListPropsType) => {
+    let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todolistId])
 
-    const tasksList = props.tasks.length === 0
+    tasks = useMemo(() => {
+        if (props.filter === 'active') {
+            tasks = tasks.filter(t => !t.isDone)
+        } else if (props.filter === 'completed') {
+            tasks = tasks.filter(t => t.isDone)
+        }
+        return tasks
+    }, [props.filter, tasks])
+
+    const tasksList = tasks.length === 0
         ? <S.StyleEmpty>No any tasks yet</S.StyleEmpty>
-        : props.tasks.map((task: TaskType) => {
-            return (
-                <li key={task.id}>
-                    {/*<Task task={task}*/}
-                    {/*      removeTask={props.removeTask}*/}
-                    {/*      changeStatus={props.changeStatus}*/}
-                    {/*      todolistId={props.todolistId}*/}
-                    {/*      changeTaskTitle={props.changeTaskTitle}/>*/}
-                    <Task todolistId={props.todolistId} taskId={task.id}/>
-                </li>
-            )
-        })
+        : tasks.map((task: TaskType) => <li key={task.id}><Task todolistId={props.todolistId} taskId={task.id}/></li>)
 
-    return (
-        <S.StyledTaskList> {tasksList} </S.StyledTaskList>
-    );
-};
+    return <S.StyledTaskList> {tasksList} </S.StyledTaskList>
+}
