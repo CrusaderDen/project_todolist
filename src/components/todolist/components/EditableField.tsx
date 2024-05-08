@@ -14,10 +14,23 @@ export const EditableField = memo((props: EditableSpanPropsType) => {
         setEditMode(true)
         setTitle(props.title)
     }
+
     const activateViewMode = () => {
         setEditMode(false)
         props.onChange(title)
     }
+
+    const activateViewModeWithoutChanges = () => {
+        setTitle('')
+        setEditMode(false)
+    }
+
+    const onBlur = () => activateViewMode()
+    const onKeyDown = (e: any) => {
+        if (e.code === 'Enter' || e.code === "NumpadEnter") activateViewMode()
+        if (e.code === "Escape") activateViewModeWithoutChanges()
+    }
+
     const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
 
     const inputStyles: object = {
@@ -28,6 +41,6 @@ export const EditableField = memo((props: EditableSpanPropsType) => {
         top: '-2px',
     }
     return editMode
-        ? <input autoFocus onBlur={activateViewMode} value={title} onChange={onChangeTitleHandler} style={inputStyles}/>
+        ? <input autoFocus onBlur={onBlur} onKeyDown={(e) => onKeyDown(e)} value={title} onChange={onChangeTitleHandler} style={inputStyles}/>
         : <span onDoubleClick={activateEditMode} className={props.isDone ? 'is-done' : ''}>{props.title}</span>
 })
