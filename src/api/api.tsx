@@ -1,57 +1,34 @@
 import axios from "axios";
 
-const settings = {
+const instance = axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.1",
   withCredentials: true,
   headers: {
     "API-KEY": "0560c313-8e01-44e8-b3a8-970fcfb3c17e",
   },
-};
+});
 
 export const api = {
   getTodolists() {
-    return axios.get(
-      "https://social-network.samuraijs.com/api/1.1/todo-lists",
-      settings,
-    );
+    return instance.get("/todo-lists");
   },
   deleteTodolist(todolistId: string) {
-    return axios.delete(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
-      settings,
-    );
+    return instance.delete(`/todo-lists/${todolistId}`);
   },
   createTodolist(title: string) {
-    return axios.post(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/`,
-      { title },
-      settings,
-    );
+    return instance.post(`/todo-lists/`, { title });
   },
   updateTodolistTitle(todolistId: string, title: string) {
-    return axios.put(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
-      { title },
-      settings,
-    );
+    return instance.put(`/todo-lists/${todolistId}`, { title });
   },
   getTodolistTasks(todolistId: string) {
-    return axios.get(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`,
-      settings,
-    );
+    return instance.get(`/todo-lists/${todolistId}/tasks`);
   },
   createTodolistTask(todolistId: string, title: string) {
-    return axios.post(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`,
-      { title },
-      settings,
-    );
+    return instance.post(`/todo-lists/${todolistId}/tasks`, { title });
   },
   deleteTodolistTask(todolistId: string, taskId: string) {
-    return axios.delete(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
-      settings,
-    );
+    return instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`);
   },
   updateTodolistTaskTitle(todolistId: string, taskId: string, title: string) {
     const newTask = {
@@ -66,10 +43,6 @@ export const api = {
       deadline: null,
       addedDate: new Date(),
     };
-    return axios.put(
-      `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
-      newTask,
-      settings,
-    );
+    return instance.put(`/${todolistId}/tasks/${taskId}`, newTask);
   },
 };
