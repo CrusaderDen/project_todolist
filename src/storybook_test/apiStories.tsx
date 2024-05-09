@@ -6,10 +6,10 @@ type apiStoriesPT = {
 };
 
 export const ApiStories = ({ btnName }: apiStoriesPT) => {
-  const [state, setState] = useState("");
-  const [todoId, setTodoId] = useState("");
-  const [taskId, setTaskId] = useState("");
-  const [title, setTitle] = useState("");
+  const [response, setResponse] = useState<any>("");
+  const [todoId, setTodoId] = useState<any>("");
+  const [taskId, setTaskId] = useState<any>("");
+  const [title, setTitle] = useState<any>("");
 
   let labelForFirstField: string = "";
   let labelForSecondField: string = "";
@@ -50,34 +50,36 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
   const onClickHandler = () => {
     switch (btnName) {
       case "Получить тудулисты":
-        api.getTodolists().then((res) => setState(res.data));
+        api.getTodolists().then((res) => setResponse(res.data));
         break;
       case "Удалить тудулист":
-        api.deleteTodolist(todoId).then((res) => setState(res.data));
+        api.deleteTodolist(todoId).then((res) => setResponse(res.data));
         break;
       case "Создать тудулист":
-        api.createTodolist(title).then((res) => setState(res.data));
+        api.createTodolist(title).then((res) => setResponse(res.data));
         break;
       case "Обновить тайтл тудулиста":
         api
           .updateTodolistTitle(todoId, title)
-          .then((res) => setState(res.data));
+          .then((res) => setResponse(res.data));
         break;
       case "Получить таски тудулиста":
-        api.getTodolistTasks(todoId).then((res) => setState(res.data.items));
+        api.getTodolistTasks(todoId).then((res) => setResponse(res.data.items));
         break;
       case "Создать таску тудулиста":
-        api.createTodolistTask(todoId, title).then((res) => setState(res.data));
+        api
+          .createTodolistTask(todoId, title)
+          .then((res) => setResponse(res.data));
         break;
       case "Удалить таску тудулиста":
         api
           .deleteTodolistTask(todoId, taskId)
-          .then((res) => setState(res.data));
+          .then((res) => setResponse(res.data));
         break;
       case "Обновить таску тудулиста":
         api
           .updateTodolistTaskTitle(todoId, taskId, title)
-          .then((res) => setState(res.data));
+          .then((res) => setResponse(res.data));
         break;
     }
   };
@@ -163,7 +165,7 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
         {btnName}
       </button>
       {input}
-      <div>{state && JSON.stringify(state)}</div>
+      <div>{response && JSON.stringify(response)}</div>
     </div>
   );
 };

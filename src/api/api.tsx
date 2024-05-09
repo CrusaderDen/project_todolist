@@ -10,25 +10,35 @@ const instance = axios.create({
 
 export const api = {
   getTodolists() {
-    return instance.get("/todo-lists");
+    return instance.get<TodolistServerType[]>("/todo-lists");
   },
   deleteTodolist(todolistId: string) {
-    return instance.delete(`/todo-lists/${todolistId}`);
+    return instance.delete<TodolistResponseType>(`/todo-lists/${todolistId}`);
   },
   createTodolist(title: string) {
-    return instance.post(`/todo-lists/`, { title });
+    return instance.post<TodolistResponseType>(`/todo-lists/`, { title });
   },
   updateTodolistTitle(todolistId: string, title: string) {
-    return instance.put(`/todo-lists/${todolistId}`, { title });
+    return instance.put<TodolistResponseType<{ item: TodolistServerType }>>(
+      `/todo-lists/${todolistId}`,
+      { title },
+    );
   },
   getTodolistTasks(todolistId: string) {
-    return instance.get(`/todo-lists/${todolistId}/tasks`);
+    return instance.get<getTasksResponseType>(
+      `/todo-lists/${todolistId}/tasks`,
+    );
   },
   createTodolistTask(todolistId: string, title: string) {
-    return instance.post(`/todo-lists/${todolistId}/tasks`, { title });
+    return instance.post<TaskResponseType<{ items: serverTaskType[] }>>(
+      `/todo-lists/${todolistId}/tasks`,
+      { title },
+    );
   },
   deleteTodolistTask(todolistId: string, taskId: string) {
-    return instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`);
+    return instance.delete<TaskResponseType>(
+      `/todo-lists/${todolistId}/tasks/${taskId}`,
+    );
   },
   updateTodolistTaskTitle(todolistId: string, taskId: string, title: string) {
     const newTask = {
@@ -43,6 +53,58 @@ export const api = {
       deadline: null,
       addedDate: new Date(),
     };
-    return instance.put(`/${todolistId}/tasks/${taskId}`, newTask);
+    return instance.put<TaskResponseType<{ items: serverTaskType[] }>>(
+      `/todo-lists/${todolistId}/tasks/${taskId}`,
+      newTask,
+    );
   },
+};
+
+//Types for Todos
+
+type FieldErrorType = {
+  error: string;
+  field: string;
+};
+
+type TodolistServerType = {
+  id: string;
+  title: string;
+  addedDate: string;
+  order: number;
+};
+
+type TodolistResponseType<T = {}> = {
+  data: T;
+  messages: string[];
+  fieldsErrors: FieldErrorType[];
+  resultCode: number;
+};
+
+//Types for Tasks
+
+type serverTaskType = {
+  id: string;
+  title: string;
+  description: string | null;
+  todoListId: string;
+  order: number;
+  status: number;
+  priority: number;
+  startDate: string | null;
+  deadline: string | null;
+  addedDate: string;
+};
+
+type getTasksResponseType = {
+  items: serverTaskType[];
+  totalCount: number;
+  error: string | null;
+};
+
+type TaskResponseType<T = {}> = {
+  data: T;
+  messages: string[];
+  fieldsErrors: FieldErrorType[];
+  resultCode: number;
 };
