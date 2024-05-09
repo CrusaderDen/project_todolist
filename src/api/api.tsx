@@ -9,8 +9,9 @@ const instance = axios.create({
 });
 
 export const api = {
+  //Todolists requests
   getTodolists() {
-    return instance.get<TodolistServerType[]>("/todo-lists");
+    return instance.get<ServerTodolistType[]>("/todo-lists");
   },
   deleteTodolist(todolistId: string) {
     return instance.delete<TodolistResponseType>(`/todo-lists/${todolistId}`);
@@ -19,18 +20,19 @@ export const api = {
     return instance.post<TodolistResponseType>(`/todo-lists/`, { title });
   },
   updateTodolistTitle(todolistId: string, title: string) {
-    return instance.put<TodolistResponseType<{ item: TodolistServerType }>>(
+    return instance.put<TodolistResponseType<{ item: ServerTodolistType }>>(
       `/todo-lists/${todolistId}`,
       { title },
     );
   },
+  //Tasks requests
   getTodolistTasks(todolistId: string) {
     return instance.get<getTasksResponseType>(
       `/todo-lists/${todolistId}/tasks`,
     );
   },
   createTodolistTask(todolistId: string, title: string) {
-    return instance.post<TaskResponseType<{ items: serverTaskType[] }>>(
+    return instance.post<TaskResponseType<{ items: ServerTaskType[] }>>(
       `/todo-lists/${todolistId}/tasks`,
       { title },
     );
@@ -53,7 +55,7 @@ export const api = {
       deadline: null,
       addedDate: new Date(),
     };
-    return instance.put<TaskResponseType<{ items: serverTaskType[] }>>(
+    return instance.put<TaskResponseType<{ items: ServerTaskType[] }>>(
       `/todo-lists/${todolistId}/tasks/${taskId}`,
       newTask,
     );
@@ -61,13 +63,12 @@ export const api = {
 };
 
 //Types for Todos
-
 type FieldErrorType = {
   error: string;
   field: string;
 };
 
-type TodolistServerType = {
+export type ServerTodolistType = {
   id: string;
   title: string;
   addedDate: string;
@@ -83,21 +84,36 @@ type TodolistResponseType<T = {}> = {
 
 //Types for Tasks
 
-type serverTaskType = {
+export enum TaskStatuses {
+  New,
+  InProgress,
+  Completed = 2,
+  Draft = 3,
+}
+
+export enum TaskPriorities {
+  Low,
+  Middle,
+  Hi,
+  Urgently,
+  Later,
+}
+
+export type ServerTaskType = {
   id: string;
   title: string;
   description: string | null;
   todoListId: string;
   order: number;
-  status: number;
-  priority: number;
+  status: TaskStatuses;
+  priority: TaskPriorities;
   startDate: string | null;
   deadline: string | null;
   addedDate: string;
 };
 
 type getTasksResponseType = {
-  items: serverTaskType[];
+  items: ServerTaskType[];
   totalCount: number;
   error: string | null;
 };

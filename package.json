@@ -75,5 +75,10 @@
     "prop-types": "15.8.1",
     "storybook": "^8.0.10",
     "webpack": "5.91.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }

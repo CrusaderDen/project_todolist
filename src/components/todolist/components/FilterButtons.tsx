@@ -1,40 +1,52 @@
-import React from 'react';
-import {S} from "./_styles";
-import {UniversalButton} from "./UniversalButton";
-import {ChangeTodolistFilterAC} from "../state/todolists-reducer";
-import {useDispatch} from "react-redux";
-import {FilterValuesType} from "../../../App";
-
+import React from "react";
+import { S } from "./_styles";
+import { UniversalButton } from "./UniversalButton";
+import {
+  ChangeTodolistFilterAC,
+  FilterValuesType,
+} from "../state/todolists-reducer";
+import { useDispatch } from "react-redux";
 
 type FilterButtonsPropsType = {
-    todolistId: string
-    filter: FilterValuesType
-}
-
+  todolistId: string;
+  filter: FilterValuesType;
+};
 
 export const FilterButtons = (props: FilterButtonsPropsType) => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    function onAllClickHandler() {
-        dispatch(ChangeTodolistFilterAC(props.todolistId, 'all'))
-    }
+  function onAllClickHandler() {
+    dispatch(ChangeTodolistFilterAC(props.todolistId, "all"));
+  }
 
-    function onActiveClickHandler() {
-        dispatch(ChangeTodolistFilterAC(props.todolistId, 'active'))
-    }
+  function onActiveClickHandler() {
+    dispatch(ChangeTodolistFilterAC(props.todolistId, "active"));
+  }
 
-    function onCompletedClickHandler() {
-        dispatch(ChangeTodolistFilterAC(props.todolistId, 'completed'))
-    }
+  function onCompletedClickHandler() {
+    dispatch(ChangeTodolistFilterAC(props.todolistId, "completed"));
+  }
 
-    return (
-        <S.StyledFilterButtonBlock>
-            <UniversalButton title={'All'} onClickHandler={onAllClickHandler} currentFilter={props.filter}
-                             expectedFilter={'all'}/>
-            <UniversalButton title={'Active'} onClickHandler={onActiveClickHandler} currentFilter={props.filter}
-                             expectedFilter={'active'}/>
-            <UniversalButton title={'Completed'} onClickHandler={onCompletedClickHandler} currentFilter={props.filter}
-                             expectedFilter={'completed'}/>
-        </S.StyledFilterButtonBlock>
-    );
+  return (
+    <S.StyledFilterButtonBlock>
+      <UniversalButton
+        title={"All"}
+        onClickHandler={onAllClickHandler}
+        currentFilter={props.filter}
+        expectedFilter={"all"}
+      />
+      <UniversalButton
+        title={"Active"}
+        onClickHandler={onActiveClickHandler}
+        currentFilter={props.filter}
+        expectedFilter={"active"}
+      />
+      <UniversalButton
+        title={"Completed"}
+        onClickHandler={onCompletedClickHandler}
+        currentFilter={props.filter}
+        expectedFilter={"completed"}
+      />
+    </S.StyledFilterButtonBlock>
+  );
 };
