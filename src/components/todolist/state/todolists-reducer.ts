@@ -4,26 +4,21 @@ import { ServerTodolistType } from "../../../api/api";
 export const todolistId1 = v1();
 export const todolistId2 = v1();
 const initialState: TodolistDomainType[] = [
-  {
-    id: todolistId1,
-    title: "What to learn",
-    filter: "all",
-    addedDate: "",
-    order: 0,
-  },
-  {
-    id: todolistId2,
-    title: "What to buy",
-    filter: "all",
-    addedDate: "",
-    order: 0,
-  },
+  // {
+  //   id: todolistId1,
+  //   title: "What to learn",
+  //   filter: "all",
+  //   addedDate: "",
+  //   order: 0,
+  // },
+  // {
+  //   id: todolistId2,
+  //   title: "What to buy",
+  //   filter: "all",
+  //   addedDate: "",
+  //   order: 0,
+  // },
 ];
-
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistDomainType = ServerTodolistType & {
-  filter: FilterValuesType;
-};
 
 //---------Reducer
 export const todolistsReducer = (
@@ -52,6 +47,8 @@ export const todolistsReducer = (
       return state.map((tl) =>
         tl.id === action.id ? { ...tl, filter: action.filter } : tl,
       );
+    case "SET-TODOLISTS":
+      return action.todolists.map((tl) => ({ ...tl, filter: "all" }));
     default:
       return state;
   }
@@ -67,10 +64,13 @@ export const ChangeTodolistTitleAC = (id: string, title: string) =>
   ({ type: "CHANGE-TODOLIST-TITLE", title, id }) as const;
 export const ChangeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
   ({ type: "CHANGE-TODOLIST-FILTER", id, filter }) as const;
+export const SetTodolistsAC = (todolists: ServerTodolistType[]) =>
+  ({ type: "SET-TODOLISTS", todolists }) as const;
 //---------AC Types
 export type ActionsType =
   | RemoveTodolistActionType
   | AddTodolistActionType
+  | SetTodolistsActionType
   | ReturnType<typeof ChangeTodolistTitleAC>
   | ReturnType<typeof ChangeTodolistFilterAC>;
 //---------AC Types for export
@@ -82,4 +82,13 @@ export type AddTodolistActionType = {
   type: "ADD-TODOLIST";
   title: string;
   todolistId: string;
+};
+export type SetTodolistsActionType = {
+  type: "SET-TODOLISTS";
+  todolists: ServerTodolistType[];
+};
+//---------State Types
+export type FilterValuesType = "all" | "active" | "completed";
+export type TodolistDomainType = ServerTodolistType & {
+  filter: FilterValuesType;
 };

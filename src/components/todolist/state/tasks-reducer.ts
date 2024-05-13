@@ -2,114 +2,113 @@ import { v1 } from "uuid";
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
-  todolistId1,
-  todolistId2,
+  SetTodolistsActionType,
 } from "./todolists-reducer";
 import { TasksStateType } from "../../../App";
 import { TaskPriorities, TaskStatuses } from "../../../api/api";
 
 //---------Initial state
 const initialState: TasksStateType = {
-  [todolistId1]: [
-    {
-      id: v1(),
-      title: "HTML&CSS",
-      status: TaskStatuses.Completed,
-      todoListId: todolistId1,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "JS",
-      status: TaskStatuses.Completed,
-      todoListId: todolistId1,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "React",
-      status: TaskStatuses.Completed,
-      todoListId: todolistId1,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "Redux",
-      status: TaskStatuses.New,
-      todoListId: todolistId1,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "Next JS",
-      status: TaskStatuses.New,
-      todoListId: todolistId1,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-  ],
-  [todolistId2]: [
-    {
-      id: v1(),
-      title: "Эклерчики",
-      status: TaskStatuses.Completed,
-      todoListId: todolistId2,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "Пивко",
-      status: TaskStatuses.New,
-      todoListId: todolistId2,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-    {
-      id: v1(),
-      title: "Чипсы",
-      status: TaskStatuses.Completed,
-      todoListId: todolistId2,
-      startDate: "",
-      deadline: "",
-      addedDate: "",
-      order: 0,
-      description: "",
-      priority: TaskPriorities.Low,
-    },
-  ],
+  // [todolistId1]: [
+  //   {
+  //     id: v1(),
+  //     title: "HTML&CSS",
+  //     status: TaskStatuses.Completed,
+  //     todoListId: todolistId1,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "JS",
+  //     status: TaskStatuses.Completed,
+  //     todoListId: todolistId1,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "React",
+  //     status: TaskStatuses.Completed,
+  //     todoListId: todolistId1,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "Redux",
+  //     status: TaskStatuses.New,
+  //     todoListId: todolistId1,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "Next JS",
+  //     status: TaskStatuses.New,
+  //     todoListId: todolistId1,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  // ],
+  // [todolistId2]: [
+  //   {
+  //     id: v1(),
+  //     title: "Эклерчики",
+  //     status: TaskStatuses.Completed,
+  //     todoListId: todolistId2,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "Пивко",
+  //     status: TaskStatuses.New,
+  //     todoListId: todolistId2,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  //   {
+  //     id: v1(),
+  //     title: "Чипсы",
+  //     status: TaskStatuses.Completed,
+  //     todoListId: todolistId2,
+  //     startDate: "",
+  //     deadline: "",
+  //     addedDate: "",
+  //     order: 0,
+  //     description: "",
+  //     priority: TaskPriorities.Low,
+  //   },
+  // ],
 };
 //---------Reducer
 export const tasksReducer = (
@@ -161,7 +160,12 @@ export const tasksReducer = (
       const newState = { ...state };
       delete newState[action.id];
       return newState;
-
+    case "SET-TODOLISTS":
+      const result: TasksStateType = {};
+      for (let i = 0; i < action.todolists.length; i++) {
+        result[action.todolists[i].id] = [];
+      }
+      return result;
     default:
       // throw new Error('Unknown action type')
       return state;
@@ -189,4 +193,5 @@ export type TaskActionsType =
   | ReturnType<typeof ChangeTaskTitleAC>
   | ReturnType<typeof ChangeTaskStatusAC>
   | AddTodolistActionType
-  | RemoveTodolistActionType;
+  | RemoveTodolistActionType
+  | SetTodolistsActionType;
