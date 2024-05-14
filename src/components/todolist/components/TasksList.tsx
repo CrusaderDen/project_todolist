@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { S } from "./_styles";
 import { Task } from "./Task";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../state/store";
 import { FilterValuesType } from "../state/todolists-reducer";
 import { ServerTaskType, TaskStatuses } from "../../../api/api";
+import { fetchTasksTC } from "../state/tasks-reducer";
 
 type TasksListPropsType = {
   todolistId: string;
@@ -15,6 +16,12 @@ export const TasksList = (props: TasksListPropsType) => {
   let tasks = useSelector<AppRootStateType, ServerTaskType[]>(
     (state) => state.tasks[props.todolistId],
   );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchTasksTC(props.todolistId));
+  }, []);
 
   tasks = useMemo(() => {
     if (props.filter === "active") {

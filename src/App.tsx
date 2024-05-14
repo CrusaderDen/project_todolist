@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./App.css";
 import { AddTodolistForm } from "./AddTodolistForm";
 import {
   AddTodolistAC,
+  fetchTodolistsTC,
   TodolistDomainType,
 } from "./components/todolist/state/todolists-reducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,16 +12,6 @@ import { TodoList } from "./components/todolist/components/TodoList";
 import { Clock } from "./components/clock/Clock";
 import { ServerTaskType } from "./api/api";
 
-// export type TodolistType = {
-//     id: string
-//     title: string
-//     filter: FilterValuesType
-// }
-// export type TaskType = {
-//     id: string
-//     title: string
-//     isDone: boolean
-// }
 export type TasksStateType = {
   [key: string]: ServerTaskType[];
 };
@@ -35,6 +26,11 @@ function App() {
     (title: string) => dispatch(AddTodolistAC(title)),
     [dispatch],
   );
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchTodolistsTC());
+  }, []);
 
   return (
     <div className="App">

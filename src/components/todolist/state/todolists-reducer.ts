@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { ServerTodolistType } from "../../../api/api";
+import { api, ServerTodolistType } from "../../../api/api";
 //---------Initial state
 export const todolistId1 = v1();
 export const todolistId2 = v1();
@@ -91,4 +91,10 @@ export type SetTodolistsActionType = {
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = ServerTodolistType & {
   filter: FilterValuesType;
+};
+//---------Thunks
+export const fetchTodolistsTC = () => (dispatch: any) => {
+  api.getTodolists().then((res) => {
+    dispatch(SetTodolistsAC(res.data));
+  });
 };

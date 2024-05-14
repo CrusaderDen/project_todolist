@@ -276,4 +276,6 @@ test("empty arrays should be added when we set todolists", () => {
   ]);
   const endState = tasksReducer({}, action);
   expect(Object.keys(endState).length).toBe(2);
+  expect(endState[todolistId1]).toEqual([]);
+  expect(endState[todolistId2]).toEqual([]);
 });

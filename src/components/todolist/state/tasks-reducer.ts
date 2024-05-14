@@ -5,7 +5,12 @@ import {
   SetTodolistsActionType,
 } from "./todolists-reducer";
 import { TasksStateType } from "../../../App";
-import { TaskPriorities, TaskStatuses } from "../../../api/api";
+import {
+  api,
+  ServerTaskType,
+  TaskPriorities,
+  TaskStatuses,
+} from "../../../api/api";
 
 //---------Initial state
 const initialState: TasksStateType = {
@@ -166,8 +171,11 @@ export const tasksReducer = (
         result[action.todolists[i].id] = [];
       }
       return result;
+    case "SET-TASKS":
+      const copyState = { ...state };
+      copyState[action.todolistId] = action.tasks;
+      return copyState;
     default:
-      // throw new Error('Unknown action type')
       return state;
   }
 };
@@ -186,12 +194,25 @@ export const ChangeTaskStatusAC = (
   taskId: string,
   status: TaskStatuses,
 ) => ({ type: "CHANGE-TASK-STATUS", todolistId, taskId, status }) as const;
+export const SetTasksAC = (tasks: ServerTaskType[], todolistId: string) =>
+  ({
+    type: "SET-TASKS",
+    tasks,
+    todolistId,
+  }) as const;
 //---------AC Types
 export type TaskActionsType =
   | ReturnType<typeof RemoveTaskAC>
   | ReturnType<typeof AddTaskAC>
   | ReturnType<typeof ChangeTaskTitleAC>
   | ReturnType<typeof ChangeTaskStatusAC>
+  | ReturnType<typeof SetTasksAC>
   | AddTodolistActionType
   | RemoveTodolistActionType
   | SetTodolistsActionType;
+//---------Thunk
+export const fetchTasksTC = (todolistId: string) => (dispatch: any) => {
+  api.getTodolistTasks(todolistId).then((res) => {
+    dispatch(SetTasksAC(res.data.items, todolistId));
+  });
+};
