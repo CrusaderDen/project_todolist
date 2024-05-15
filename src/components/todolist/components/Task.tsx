@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ChangeTaskStatusAC,
   ChangeTaskTitleAC,
+  deleteTaskTC,
   RemoveTaskAC,
 } from "../state/tasks-reducer";
 import { AppRootStateType } from "../state/store";
-import { ServerTaskType, TaskStatuses } from "../../../api/api";
+import { api, ServerTaskType, TaskStatuses } from "../../../api/api";
 
 type TaskPropsType = {
   taskId: string;
@@ -36,10 +37,10 @@ export const Task = memo(({ taskId, todolistId }: TaskPropsType) => {
   );
   const dispatch = useDispatch();
 
-  const onRemoveHandler = useCallback(
-    () => dispatch(RemoveTaskAC(todolistId, taskId)),
-    [dispatch],
-  );
+  const onRemoveHandler = useCallback(() => {
+    // @ts-ignore
+    dispatch(deleteTaskTC(todolistId, taskId));
+  }, [dispatch]);
   const onChangeStatusHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) =>
       dispatch(

@@ -7,12 +7,14 @@ import { AddTodolistForm } from "../../../AddTodolistForm";
 import { Button, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
-import { AddTaskAC } from "../state/tasks-reducer";
+import { AddTaskAC, createTaskTC } from "../state/tasks-reducer";
 import {
   ChangeTodolistTitleAC,
+  deleteTodolistTC,
   FilterValuesType,
   RemoveTodolistAC,
 } from "../state/todolists-reducer";
+import { api } from "../../../api/api";
 
 type TodoListPropsType = {
   todolistId: string;
@@ -23,12 +25,16 @@ type TodoListPropsType = {
 export const TodoList = ({ todolistId, title, filter }: TodoListPropsType) => {
   const dispatch = useDispatch();
 
-  const removeTodolist = () => dispatch(RemoveTodolistAC(todolistId));
+  const removeTodolist = () => {
+    // @ts-ignore
+    dispatch(deleteTodolistTC(todolistId));
+  };
   const changeTodolistTitle = (title: string) =>
     dispatch(ChangeTodolistTitleAC(todolistId, title));
   const addTask = useCallback(
     (title: string) => {
-      dispatch(AddTaskAC(todolistId, title));
+      // @ts-ignore
+      dispatch(createTaskTC(todolistId, title));
     },
     [todolistId, dispatch],
   );

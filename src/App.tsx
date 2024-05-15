@@ -3,6 +3,7 @@ import "./App.css";
 import { AddTodolistForm } from "./AddTodolistForm";
 import {
   AddTodolistAC,
+  createTodolistTC,
   fetchTodolistsTC,
   TodolistDomainType,
 } from "./components/todolist/state/todolists-reducer";
@@ -23,7 +24,10 @@ function App() {
   const dispatch = useDispatch();
 
   const addTodolist = useCallback(
-    (title: string) => dispatch(AddTodolistAC(title)),
+    (title: string) => {
+      // @ts-ignore
+      dispatch(createTodolistTC(title));
+    },
     [dispatch],
   );
 

@@ -17,7 +17,10 @@ export const api = {
     return instance.delete<TodolistResponseType>(`/todo-lists/${todolistId}`);
   },
   createTodolist(title: string) {
-    return instance.post<TodolistResponseType>(`/todo-lists/`, { title });
+    return instance.post<TodolistResponseType<{ item: ServerTodolistType }>>(
+      `/todo-lists/`,
+      { title },
+    );
   },
   updateTodolistTitle(todolistId: string, title: string) {
     return instance.put<TodolistResponseType<{ item: ServerTodolistType }>>(
@@ -32,7 +35,7 @@ export const api = {
     );
   },
   createTodolistTask(todolistId: string, title: string) {
-    return instance.post<TaskResponseType<{ items: ServerTaskType[] }>>(
+    return instance.post<TaskResponseType<{ item: ServerTaskType }>>(
       `/todo-lists/${todolistId}/tasks`,
       { title },
     );
@@ -118,7 +121,7 @@ type getTasksResponseType = {
   error: string | null;
 };
 
-type TaskResponseType<T = {}> = {
+export type TaskResponseType<T = {}> = {
   data: T;
   messages: string[];
   fieldsErrors: FieldErrorType[];
