@@ -1,18 +1,12 @@
-import { v1 } from "uuid";
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
   SetTodolistsActionType,
 } from "./todolists-reducer";
 import { TasksStateType } from "../../../App";
-import {
-  api,
-  ServerTaskType,
-  TaskPriorities,
-  TaskResponseType,
-  TaskStatuses,
-} from "../../../api/api";
+import { api, ServerTaskType, TaskStatuses } from "../../../api/api";
 import { Dispatch } from "redux";
+import { AppRootStateType } from "./store";
 
 //---------Initial state
 const initialState: TasksStateType = {
@@ -218,5 +212,28 @@ export const createTaskTC =
   (todolistId: string, title: string) => (dispatch: Dispatch) => {
     api.createTodolistTask(todolistId, title).then((res) => {
       dispatch(AddTaskAC(res.data.data.item));
+    });
+  };
+export const ChangeTaskStatusTC =
+  (todolistId: string, taskId: string, newStatus: TaskStatuses) =>
+  (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    const state = getState();
+    const task = state.tasks[todolistId].find((t) => t.id === taskId);
+    if (!task) {
+      console.warn("Task not found in the state");
+      return;
+    }
+    const updatedTask = { ...task, status: newStatus };
+    api
+      .updateTodolistTaskStatus(todolistId, taskId, updatedTask)
+      .then((res) => {
+        dispatch(ChangeTaskStatusAC(todolistId, taskId, newStatus));
+      });
+  };
+export const ChangeTaskTitleTC =
+  (todolistId: string, taskId: string, title: string) =>
+  (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    api.updateTodolistTaskTitle(todolistId, taskId, title).then((res) => {
+      dispatch(ChangeTaskTitleAC(todolistId, taskId, title));
     });
   };

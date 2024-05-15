@@ -5,13 +5,12 @@ import { Checkbox, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ChangeTaskStatusAC,
-  ChangeTaskTitleAC,
+  ChangeTaskStatusTC,
+  ChangeTaskTitleTC,
   deleteTaskTC,
-  RemoveTaskAC,
 } from "../state/tasks-reducer";
 import { AppRootStateType } from "../state/store";
-import { api, ServerTaskType, TaskStatuses } from "../../../api/api";
+import { ServerTaskType, TaskStatuses } from "../../../api/api";
 
 type TaskPropsType = {
   taskId: string;
@@ -42,18 +41,20 @@ export const Task = memo(({ taskId, todolistId }: TaskPropsType) => {
     dispatch(deleteTaskTC(todolistId, taskId));
   }, [dispatch]);
   const onChangeStatusHandler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      dispatch(
-        ChangeTaskStatusAC(
-          todolistId,
-          taskId,
-          e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
-        ),
-      ),
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const currentStatus = e.currentTarget.checked
+        ? TaskStatuses.Completed
+        : TaskStatuses.New;
+      // @ts-ignore
+      dispatch(ChangeTaskStatusTC(todolistId, taskId, currentStatus));
+    },
     [dispatch],
   );
   const onChangeTitleHandler = useCallback(
-    (title: string) => dispatch(ChangeTaskTitleAC(todolistId, taskId, title)),
+    (title: string) => {
+      // @ts-ignore
+      dispatch(ChangeTaskTitleTC(todolistId, taskId, title));
+    },
     [dispatch],
   );
 

@@ -63,6 +63,16 @@ export const api = {
       newTask,
     );
   },
+  updateTodolistTaskStatus(
+    todolistId: string,
+    taskId: string,
+    newTask: ServerTaskType,
+  ) {
+    return instance.put<TaskResponseType<{ items: ServerTaskType[] }>>(
+      `/todo-lists/${todolistId}/tasks/${taskId}`,
+      newTask,
+    );
+  },
 };
 
 //Types for Todos
