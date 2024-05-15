@@ -1,22 +1,13 @@
-import {
-  AddTaskAC,
-  ChangeTaskStatusAC,
-  ChangeTaskTitleAC,
-  RemoveTaskAC,
-  SetTasksAC,
-  tasksReducer,
-} from "./tasks-reducer";
-import {
-  AddTodolistAC,
-  RemoveTodolistAC,
-  SetTodolistsAC,
-  todolistId1,
-  todolistId2,
-} from "./todolists-reducer";
-import { TasksStateType } from "../../../App";
-import { TaskPriorities, TaskStatuses } from "../../../api/api";
+import {AddTaskAC, RemoveTaskAC, SetTasksAC, tasksReducer, updateTaskAC,} from "./tasks-reducer"
+import {RemoveTodolistAC, SetTodolistsAC} from "./todolists-reducer"
+import {TasksStateType} from "../../../App"
+import {TaskPriorities, TaskStatuses} from "../../../api/api"
+import {v1} from "uuid"
 
-let startState: TasksStateType;
+export const todolistId1 = v1()
+export const todolistId2 = v1()
+
+let startState: TasksStateType
 
 beforeEach(() => {
   startState = {
@@ -120,12 +111,12 @@ beforeEach(() => {
         priority: TaskPriorities.Low,
       },
     ],
-  };
-});
+  }
+})
 
 test("correct task should be deleted from correct array", () => {
-  const action = RemoveTaskAC("todolistId2", "2");
-  const endState = tasksReducer(startState, action);
+  const action = RemoveTaskAC("todolistId2", "2")
+  const endState = tasksReducer(startState, action)
   expect(endState).toEqual({
     todolistId1: [
       {
@@ -215,8 +206,8 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriorities.Low,
       },
     ],
-  });
-});
+  })
+})
 
 test("correct task should be added to correct array", () => {
   const action = AddTaskAC({
@@ -230,46 +221,48 @@ test("correct task should be added to correct array", () => {
     order: 0,
     description: "",
     priority: TaskPriorities.Low,
-  });
-  const endState = tasksReducer(startState, action);
-  expect(endState["todolistId1"].length).toBe(5);
-  expect(endState["todolistId2"].length).toBe(4);
-  expect(endState["todolistId2"][0].id).toBeDefined();
-  expect(endState["todolistId2"][0].title).toBe("Сок");
-  expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
-});
+  })
+  const endState = tasksReducer(startState, action)
+  expect(endState["todolistId1"].length).toBe(5)
+  expect(endState["todolistId2"].length).toBe(4)
+  expect(endState["todolistId2"][0].id).toBeDefined()
+  expect(endState["todolistId2"][0].title).toBe("Сок")
+  expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New)
+})
 
 test("status of specified task should be changed", () => {
-  const action = ChangeTaskStatusAC("todolistId2", "2", TaskStatuses.Completed);
-  const endState = tasksReducer(startState, action);
-  expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed);
-  expect(endState["todolistId2"][1].status).toBe(TaskStatuses.Completed);
-});
+  const action = updateTaskAC("todolistId2", "2", {
+    status: TaskStatuses.Completed,
+  })
+  const endState = tasksReducer(startState, action)
+  expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed)
+  expect(endState["todolistId2"][1].status).toBe(TaskStatuses.Completed)
+})
 
 test("title of specified task should be changed", () => {
-  const action = ChangeTaskTitleAC("todolistId2", "2", "Сок");
-  const endState = tasksReducer(startState, action);
-  expect(endState["todolistId1"][1].title).toBe("JS");
-  expect(endState["todolistId2"][1].title).toBe("Сок");
-});
+  const action = updateTaskAC("todolistId2", "2", { title: "Сок" })
+  const endState = tasksReducer(startState, action)
+  expect(endState["todolistId1"][1].title).toBe("JS")
+  expect(endState["todolistId2"][1].title).toBe("Сок")
+})
 
 // test("new array should be added when new todolist is added", () => {
-//   const action = AddTodolistAC("new todolist");
-//   const endState = tasksReducer(startState, action);
-//   const keys = Object.keys(endState);
-//   const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2");
-//   if (!newKey) throw Error("new key should be added");
-//   expect(keys.length).toBe(3);
-//   expect(endState[newKey]).toEqual([]);
-// });
+//   const action = AddTodolistAC("new todolist")
+//   const endState = tasksReducer(startState, action)
+//   const keys = Object.keys(endState)
+//   const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2")
+//   if (!newKey) throw Error("new key should be added")
+//   expect(keys.length).toBe(3)
+//   expect(endState[newKey]).toEqual([])
+// })
 
 test("property with todolistID should be deleted", () => {
-  const action = RemoveTodolistAC("todolistId2");
-  const endState = tasksReducer(startState, action);
-  const keys = Object.keys(endState);
-  expect(keys.length).toBe(1);
-  expect(endState["todolistId2"]).not.toBeDefined();
-});
+  const action = RemoveTodolistAC("todolistId2")
+  const endState = tasksReducer(startState, action)
+  const keys = Object.keys(endState)
+  expect(keys.length).toBe(1)
+  expect(endState["todolistId2"]).not.toBeDefined()
+})
 
 test("empty arrays should be added when we set todolists", () => {
   const action = SetTodolistsAC([
@@ -285,12 +278,12 @@ test("empty arrays should be added when we set todolists", () => {
       addedDate: "",
       order: 0,
     },
-  ]);
-  const endState = tasksReducer({}, action);
-  expect(Object.keys(endState).length).toBe(2);
-  expect(endState[todolistId1]).toEqual([]);
-  expect(endState[todolistId2]).toEqual([]);
-});
+  ])
+  const endState = tasksReducer({}, action)
+  expect(Object.keys(endState).length).toBe(2)
+  expect(endState[todolistId1]).toEqual([])
+  expect(endState[todolistId2]).toEqual([])
+})
 
 test("tasks should be added for todolist", () => {
   const action = SetTasksAC(
@@ -309,8 +302,8 @@ test("tasks should be added for todolist", () => {
       },
     ],
     "todolistId1",
-  );
-  const endState = tasksReducer({ todolistId1: [], todolistId2: [] }, action);
-  expect(endState["todolistId1"].length).toBe(1);
-  expect(endState["todolistId2"].length).toBe(0);
-});
+  )
+  const endState = tasksReducer({ todolistId1: [], todolistId2: [] }, action)
+  expect(endState["todolistId1"].length).toBe(1)
+  expect(endState["todolistId2"].length).toBe(0)
+})

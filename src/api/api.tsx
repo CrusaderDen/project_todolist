@@ -45,32 +45,10 @@ export const api = {
       `/todo-lists/${todolistId}/tasks/${taskId}`,
     );
   },
-  updateTodolistTaskTitle(todolistId: string, taskId: string, title: string) {
-    const newTask = {
-      id: taskId,
-      title,
-      description: null,
-      todoListId: todolistId,
-      order: 0,
-      status: 0,
-      priority: 1,
-      startDate: null,
-      deadline: null,
-      addedDate: new Date(),
-    };
-    return instance.put<TaskResponseType<{ items: ServerTaskType[] }>>(
+  updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+    return instance.put<TaskResponseType<{ items: ServerTaskType }>>(
       `/todo-lists/${todolistId}/tasks/${taskId}`,
-      newTask,
-    );
-  },
-  updateTodolistTaskStatus(
-    todolistId: string,
-    taskId: string,
-    newTask: ServerTaskType,
-  ) {
-    return instance.put<TaskResponseType<{ items: ServerTaskType[] }>>(
-      `/todo-lists/${todolistId}/tasks/${taskId}`,
-      newTask,
+      model,
     );
   },
 };
@@ -136,4 +114,13 @@ export type TaskResponseType<T = {}> = {
   messages: string[];
   fieldsErrors: FieldErrorType[];
   resultCode: number;
+};
+
+export type UpdateTaskModelType = {
+  title: string;
+  description: string | null;
+  status: TaskStatuses;
+  priority: TaskPriorities;
+  startDate: string | null;
+  deadline: string | null;
 };

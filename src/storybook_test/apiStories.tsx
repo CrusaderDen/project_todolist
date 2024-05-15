@@ -78,7 +78,7 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
         break;
       case "Обновить таску тудулиста":
         api
-          .updateTodolistTaskTitle(todoId, taskId, title)
+          .updateTask(todoId, taskId, title)
           .then((res) => setResponse(res.data));
         break;
     }
