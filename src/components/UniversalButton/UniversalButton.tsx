@@ -1,6 +1,6 @@
 import React from "react";
-import { S } from "./_styles";
-import { FilterValuesType } from "../state/todolists-reducer";
+import { S } from "../../features/Todolists/Todolist/TodolistStyles";
+import { FilterValuesType } from "../../features/Todolists/todolists-reducer";
 
 type ButtonPropsType = {
   title: string;

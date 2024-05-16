@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import { S } from "./_styles";
+import { S } from "../TodolistStyles";
 import { Task } from "./Task";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "../state/store";
-import { FilterValuesType } from "../state/todolists-reducer";
-import { ServerTaskType, TaskStatuses } from "../../../api/api";
-import { fetchTasksTC } from "../state/tasks-reducer";
+import { AppRootStateType } from "../../../../app/store";
+import { FilterValuesType } from "../../todolists-reducer";
+import { ServerTaskType, TaskStatuses } from "../../../../api/api";
+import { fetchTasksTC } from "../../tasks-reducer";
 
 type TasksListPropsType = {
   todolistId: string;

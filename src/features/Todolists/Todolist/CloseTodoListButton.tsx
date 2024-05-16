@@ -1,6 +1,6 @@
 import React from 'react';
-import {S} from "./_styles";
-import {UniversalButton} from "./UniversalButton";
+import {S} from "./TodolistStyles";
+import {UniversalButton} from "../../../components/UniversalButton/UniversalButton";
 
 type CloseTodoListButtonPropsType = {
     removeTodolist: (todolistId: string) => void

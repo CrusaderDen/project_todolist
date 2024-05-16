@@ -1,10 +1,10 @@
 import React from "react";
-import { S } from "./_styles";
-import { UniversalButton } from "./UniversalButton";
+import { S } from "./TodolistStyles";
+import { UniversalButton } from "../../../components/UniversalButton/UniversalButton";
 import {
   ChangeTodolistFilterAC,
   FilterValuesType,
-} from "../state/todolists-reducer";
+} from "../todolists-reducer";
 import { useDispatch } from "react-redux";
 
 type FilterButtonsPropsType = {

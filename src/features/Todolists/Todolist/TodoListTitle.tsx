@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
-import {S} from './_styles'
-import {EditableField} from "./EditableField";
+import {S} from './TodolistStyles'
+import {EditableField} from "../../../components/EditableField/EditableField";
 
 type TodoListHeaderPropsType = {
     title: string

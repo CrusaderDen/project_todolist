@@ -1,7 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import {IconButton, Stack, TextField, TextFieldVariants} from "@mui/material";
-import {api} from "./api/api";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -10,7 +9,7 @@ type AddItemFormPropsType = {
 }
 
 
-export const AddTodolistForm = memo((props: AddItemFormPropsType) => {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
     const [ids, setIds] = useState([])

@@ -1,18 +1,18 @@
 import React, { useCallback } from "react";
 import { TodoListTitle } from "./TodoListTitle";
-import { S } from "./_styles";
+import { S } from "./TodolistStyles";
 import { FilterButtons } from "./FilterButtons";
-import { TasksList } from "./TasksList";
-import { AddTodolistForm } from "../../../AddTodolistForm";
+import { TasksList } from "./Task/TasksList";
+import { AddItemForm } from "../../../components/AddItemForm/AddItemForm";
 import { Button, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
-import { createTaskTC } from "../state/tasks-reducer";
+import { createTaskTC } from "../tasks-reducer";
 import {
   changeTodolistTitleTC,
   deleteTodolistTC,
   FilterValuesType,
-} from "../state/todolists-reducer";
+} from "../todolists-reducer";
 
 type TodoListPropsType = {
   todolistId: string;
@@ -57,7 +57,7 @@ export const TodoList = ({ todolistId, title, filter }: TodoListPropsType) => {
         todolistId={todolistId}
         changeTodolistTitle={changeTodolistTitle}
       />
-      <AddTodolistForm
+      <AddItemForm
         addItem={addTask}
         placeholder={"New task"}
         variant={"outlined"}
