@@ -6,13 +6,13 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
     placeholder: string
     variant: TextFieldVariants | undefined
+    disabled?: boolean
 }
 
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
-    const [ids, setIds] = useState([])
 
     function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
         setTitle(event.currentTarget.value)
@@ -42,11 +42,10 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             alignItems="center"
             spacing={2}
         >
-            <div style={{width: '80%', display: 'inline-block'}}>
+            <div style={{width: '80%', display: 'inline-block', margin: '30px'}}>
 
                 <TextField
                     fullWidth
-                    // id="outlined-basic"
                     label={props.placeholder}
                     variant={props.variant}
                     color="secondary"
@@ -55,9 +54,16 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                     onKeyDown={onKeyUpHandler}
                     error={!!error}
                     helperText={error}
+                    disabled={props.disabled}
                 />
             </div>
-            <IconButton size="large" color="secondary" aria-label="add an alarm" onClick={() => addTaskHandler()}>
+            <IconButton
+                size="large"
+                color="secondary"
+                aria-label="add an alarm"
+                disabled={props.disabled}
+                onClick={() => addTaskHandler()}
+            >
                 <AddBoxOutlinedIcon fontSize="large"/>
             </IconButton>
         </Stack>

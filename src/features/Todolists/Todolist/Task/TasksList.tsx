@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../../../../app/store";
 import { FilterValuesType } from "../../todolists-reducer";
 import { ServerTaskType, TaskStatuses } from "../../../../api/api";
-import { fetchTasksTC } from "../../tasks-reducer";
+import { getTasksTC } from "../../tasks-reducer";
 
 type TasksListPropsType = {
   todolistId: string;
@@ -20,7 +20,7 @@ export const TasksList = (props: TasksListPropsType) => {
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchTasksTC(props.todolistId));
+    dispatch(getTasksTC(props.todolistId));
   }, []);
 
   tasks = useMemo(() => {

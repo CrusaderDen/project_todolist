@@ -26,7 +26,6 @@ const auth = () => {
       body,
       settings,
     )
-    .then((res) => console.log(res));
 };
 
 auth();

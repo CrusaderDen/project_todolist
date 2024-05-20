@@ -53,7 +53,7 @@ export type ServerTodolistType = {
     addedDate: string;
     order: number;
 };
-type TodolistResponseType<T = {}> = {
+export type TodolistResponseType<T = {}> = {
     data: T;
     messages: string[];
     fieldsErrors: FieldErrorType[];
