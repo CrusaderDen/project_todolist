@@ -1,30 +1,27 @@
-import React from "react";
-import { S } from "./TodolistStyles";
-import { UniversalButton } from "../../../components/UniversalButton/UniversalButton";
-import {
-  ChangeTodolistFilterAC,
-  FilterValuesType,
-} from "../todolists-reducer";
-import { useDispatch } from "react-redux";
+import React from "react"
+import { S } from "./TodolistStyles"
+import { UniversalButton } from "components/UniversalButton/UniversalButton"
+import { ChangeTodolistFilterAC, FilterValuesType } from "../todolists-reducer"
+import { useDispatch } from "react-redux"
 
 type FilterButtonsPropsType = {
-  todolistId: string;
-  filter: FilterValuesType;
-};
+  todolistId: string
+  filter: FilterValuesType
+}
 
 export const FilterButtons = (props: FilterButtonsPropsType) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   function onAllClickHandler() {
-    dispatch(ChangeTodolistFilterAC(props.todolistId, "all"));
+    dispatch(ChangeTodolistFilterAC({ id: props.todolistId, filter: "all" }))
   }
 
   function onActiveClickHandler() {
-    dispatch(ChangeTodolistFilterAC(props.todolistId, "active"));
+    dispatch(ChangeTodolistFilterAC({ id: props.todolistId, filter: "active" }))
   }
 
   function onCompletedClickHandler() {
-    dispatch(ChangeTodolistFilterAC(props.todolistId, "completed"));
+    dispatch(ChangeTodolistFilterAC({ id: props.todolistId, filter: "completed" }))
   }
 
   return (
@@ -48,5 +45,5 @@ export const FilterButtons = (props: FilterButtonsPropsType) => {
         expectedFilter={"completed"}
       />
     </S.StyledFilterButtonBlock>
-  );
-};
+  )
+}

@@ -1,36 +1,34 @@
-import React, { useEffect, useMemo } from "react";
-import { S } from "../TodolistStyles";
-import { Task } from "./Task";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "../../../../app/store";
-import { FilterValuesType } from "../../todolists-reducer";
-import { ServerTaskType, TaskStatuses } from "../../../../api/api";
-import { getTasksTC } from "../../tasks-reducer";
+import React, { useEffect, useMemo } from "react"
+import { S } from "../TodolistStyles"
+import { Task } from "./Task"
+import { useDispatch, useSelector } from "react-redux"
+import { AppRootStateType } from "app/store"
+import { FilterValuesType } from "../../todolists-reducer"
+import { ServerTaskType, TaskStatuses } from "api/api"
+import { getTasksTC } from "../../tasks-reducer"
 
 type TasksListPropsType = {
-  todolistId: string;
-  filter: FilterValuesType;
-};
+  todolistId: string
+  filter: FilterValuesType
+}
 
 export const TasksList = (props: TasksListPropsType) => {
-  let tasks = useSelector<AppRootStateType, ServerTaskType[]>(
-    (state) => state.tasks[props.todolistId],
-  );
-  const dispatch = useDispatch();
+  let tasks = useSelector<AppRootStateType, ServerTaskType[]>(state => state.tasks[props.todolistId])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(getTasksTC(props.todolistId));
-  }, []);
+    dispatch(getTasksTC(props.todolistId))
+  }, [])
 
   tasks = useMemo(() => {
     if (props.filter === "active") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.New);
+      tasks = tasks.filter(t => t.status === TaskStatuses.New)
     } else if (props.filter === "completed") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.Completed);
+      tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
-    return tasks;
-  }, [props.filter, tasks]);
+    return tasks
+  }, [props.filter, tasks])
 
   const tasksList =
     tasks.length === 0 ? (
@@ -41,7 +39,7 @@ export const TasksList = (props: TasksListPropsType) => {
           <Task todolistId={props.todolistId} taskId={task.id} />
         </li>
       ))
-    );
+    )
 
-  return <S.StyledTaskList> {tasksList} </S.StyledTaskList>;
-};
+  return <S.StyledTaskList> {tasksList} </S.StyledTaskList>
+}
