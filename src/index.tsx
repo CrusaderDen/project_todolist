@@ -4,9 +4,10 @@ import "./index.css"
 import App from "./app/App"
 import { Provider } from "react-redux"
 import { store } from "app/store"
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { Login } from "features/Login/Login"
 import { TodolistsList } from "features/Todolists/TodolistsLists"
+import { ErrorPage } from "components/ErrorPage/ErrorPage"
 
 // const settings = {
 //   withCredentials: true,
@@ -32,7 +33,12 @@ const router = createBrowserRouter(
     {
       path: "/",
       element: <App />,
+      errorElement: <Navigate to={"404"} />,
       children: [
+        {
+          index: true,
+          element: <Navigate to={"todolists"} />,
+        },
         {
           path: "login",
           element: <Login />,
@@ -42,6 +48,10 @@ const router = createBrowserRouter(
           element: <TodolistsList />,
         },
       ],
+    },
+    {
+      path: "404",
+      element: <ErrorPage />,
     },
   ],
   {

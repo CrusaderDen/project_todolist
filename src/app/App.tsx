@@ -11,7 +11,7 @@ import { Outlet } from "react-router-dom"
 
 function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  console.log("App is rendering")
+
   return (
     <div className="App">
       <div style={{ position: "fixed" }}>
