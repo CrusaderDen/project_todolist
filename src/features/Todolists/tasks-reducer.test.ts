@@ -1,7 +1,7 @@
 import { AddTaskAC, RemoveTaskAC, SetTasksAC, tasksReducer, TasksStateType, updateTaskAC } from "./tasks-reducer"
 import { TaskPriorities, TaskStatuses } from "api/api"
 import { v1 } from "uuid"
-import { RemoveTodolistAC, SetTodolistsAC } from "features/Todolists/todolists-reducer"
+import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC } from "features/Todolists/todolists-reducer"
 
 export const todolistId1 = v1()
 export const todolistId2 = v1()
@@ -245,15 +245,22 @@ test("title of specified task should be changed", () => {
   expect(endState["todolistId2"][1].title).toBe("Сок")
 })
 
-// test("new array should be added when new todolist is added", () => {
-//   const action = AddTodolistAC({"new todolist"})
-//   const endState = tasksReducer(startState, action)
-//   const keys = Object.keys(endState)
-//   const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2")
-//   if (!newKey) throw Error("new key should be added")
-//   expect(keys.length).toBe(3)
-//   expect(endState[newKey]).toEqual([])
-// })
+test("new array should be added when new todolist is added", () => {
+  const action = AddTodolistAC({
+    todolist: {
+      id: "kek",
+      title: "wait",
+      order: 0,
+      addedDate: "",
+    },
+  })
+  const endState = tasksReducer(startState, action)
+  const keys = Object.keys(endState)
+  const newKey = keys.find(k => k !== "todolistId1" && k !== "todolistId2")
+  if (!newKey) throw Error("new key should be added")
+  expect(keys.length).toBe(3)
+  expect(endState[newKey]).toEqual([])
+})
 
 test("property with todolistID should be deleted", () => {
   const action = RemoveTodolistAC({ id: "todolistId2" })

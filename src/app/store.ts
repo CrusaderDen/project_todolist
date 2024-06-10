@@ -1,10 +1,9 @@
 import { combineReducers, UnknownAction } from "redux"
-import { TasksActionType, tasksReducer } from "features/Todolists/tasks-reducer"
-import { TodolistsActionType, todolistsReducer } from "features/Todolists/todolists-reducer"
-import { ThunkAction } from "redux-thunk"
+import { tasksReducer } from "features/Todolists/tasks-reducer"
+import { todolistsReducer } from "features/Todolists/todolists-reducer"
 import { appReducer } from "./appReducer"
 import { useDispatch } from "react-redux"
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore, ThunkAction } from "@reduxjs/toolkit"
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -17,7 +16,7 @@ export const store = configureStore({
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type RootActionsType = TodolistsActionType | TasksActionType
-export type AppDispatch = any
-export const useAppDispatch = useDispatch<AppDispatch>
+// export type RootActionsType = TodolistsActionType | TasksActionType
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, UnknownAction>
