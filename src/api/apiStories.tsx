@@ -1,165 +1,151 @@
-import React, { useState } from "react";
-import { api } from "./api";
+import React, { useState } from "react"
+import { todolistsApi } from "api/todolistsApi"
 
 type apiStoriesPT = {
-  btnName: string;
-};
+  btnName: string
+}
 
 export const ApiStories = ({ btnName }: apiStoriesPT) => {
-  const [response, setResponse] = useState<any>("");
-  const [todoId, setTodoId] = useState<any>("");
-  const [taskId, setTaskId] = useState<any>("");
-  const [title, setTitle] = useState<any>("");
+  const [response, setResponse] = useState<any>("")
+  const [todoId, setTodoId] = useState<any>("")
+  const [taskId, setTaskId] = useState<any>("")
+  const [title, setTitle] = useState<any>("")
 
-  let labelForFirstField: string = "";
-  let labelForSecondField: string = "";
-  let labelForThirdField: string = "";
+  let labelForFirstField: string = ""
+  let labelForSecondField: string = ""
+  let labelForThirdField: string = ""
   switch (btnName) {
     case "Удалить тудулист":
-      labelForFirstField = "id";
-      break;
+      labelForFirstField = "id"
+      break
     case "Создать тудулист":
-      labelForFirstField = "title";
-      break;
+      labelForFirstField = "title"
+      break
     case "Обновить тайтл тудулиста":
-      labelForFirstField = "id";
-      labelForSecondField = "title";
-      break;
+      labelForFirstField = "id"
+      labelForSecondField = "title"
+      break
     case "Получить таски тудулиста":
-      labelForFirstField = "id";
-      break;
+      labelForFirstField = "id"
+      break
     case "Создать таску тудулиста":
-      labelForFirstField = "id";
-      labelForSecondField = "title";
-      break;
+      labelForFirstField = "id"
+      labelForSecondField = "title"
+      break
     case "Удалить таску тудулиста":
-      labelForFirstField = "Todo id";
-      labelForSecondField = "Task id";
-      break;
+      labelForFirstField = "Todo id"
+      labelForSecondField = "Task id"
+      break
     case "Обновить таску тудулиста":
-      labelForFirstField = "Todo id";
-      labelForSecondField = "Task id";
-      labelForThirdField = "Title";
-      break;
+      labelForFirstField = "Todo id"
+      labelForSecondField = "Task id"
+      labelForThirdField = "Title"
+      break
   }
 
-  const onChangeTitleHandler = (e: any) => setTitle(e.currentTarget.value);
-  const onChangeTaskIdHandler = (e: any) => setTaskId(e.currentTarget.value);
-  const onChangeTodoIdHandler = (e: any) => setTodoId(e.currentTarget.value);
+  const onChangeTitleHandler = (e: any) => setTitle(e.currentTarget.value)
+  const onChangeTaskIdHandler = (e: any) => setTaskId(e.currentTarget.value)
+  const onChangeTodoIdHandler = (e: any) => setTodoId(e.currentTarget.value)
 
   const onClickHandler = () => {
     switch (btnName) {
       case "Получить тудулисты":
-        api.getTodolists().then((res) => setResponse(res.data));
-        break;
+        todolistsApi.getTodolists().then(res => setResponse(res.data))
+        break
       case "Удалить тудулист":
-        api.deleteTodolist(todoId).then((res) => setResponse(res.data));
-        break;
+        todolistsApi.deleteTodolist(todoId).then(res => setResponse(res.data))
+        break
       case "Создать тудулист":
-        api.createTodolist(title).then((res) => setResponse(res.data));
-        break;
+        todolistsApi.createTodolist(title).then(res => setResponse(res.data))
+        break
       case "Обновить тайтл тудулиста":
-        api
-          .updateTodolistTitle(todoId, title)
-          .then((res) => setResponse(res.data));
-        break;
+        todolistsApi.updateTodolistTitle(todoId, title).then(res => setResponse(res.data))
+        break
       case "Получить таски тудулиста":
-        api.getTodolistTasks(todoId).then((res) => setResponse(res.data.items));
-        break;
+        todolistsApi.getTodolistTasks(todoId).then(res => setResponse(res.data.items))
+        break
       case "Создать таску тудулиста":
-        api
-          .createTodolistTask(todoId, title)
-          .then((res) => setResponse(res.data));
-        break;
+        todolistsApi.createTodolistTask(todoId, title).then(res => setResponse(res.data))
+        break
       case "Удалить таску тудулиста":
-        api
-          .deleteTodolistTask(todoId, taskId)
-          .then((res) => setResponse(res.data));
-        break;
+        todolistsApi.deleteTodolistTask(todoId, taskId).then(res => setResponse(res.data))
+        break
       case "Обновить таску тудулиста":
-        api
-          .updateTask(todoId, taskId, title)
-          .then((res) => setResponse(res.data));
-        break;
+        todolistsApi.updateTask(todoId, taskId, title).then(res => setResponse(res.data))
+        break
     }
-  };
+  }
 
-  let input = <></>;
+  let input = <></>
 
-  if (
-    btnName === "Удалить тудулист" ||
-    btnName === "Получить таски тудулиста"
-  ) {
+  if (btnName === "Удалить тудулист" || btnName === "Получить таски тудулиста") {
     input = (
       <>
-        <input onChange={(e) => onChangeTodoIdHandler(e)} />
+        <input onChange={e => onChangeTodoIdHandler(e)} />
         <span>{labelForFirstField}</span>
       </>
-    );
+    )
   }
 
   if (btnName === "Создать тудулист") {
     input = (
       <>
-        <input onChange={(e) => onChangeTitleHandler(e)} />
+        <input onChange={e => onChangeTitleHandler(e)} />
         <span>{labelForFirstField}</span>
       </>
-    );
+    )
   }
 
-  if (
-    btnName === "Обновить тайтл тудулиста" ||
-    btnName === "Создать таску тудулиста"
-  ) {
+  if (btnName === "Обновить тайтл тудулиста" || btnName === "Создать таску тудулиста") {
     input = (
       <>
         <div>
-          <input onChange={(e) => onChangeTodoIdHandler(e)} />
+          <input onChange={e => onChangeTodoIdHandler(e)} />
           <span>{labelForFirstField}</span>
         </div>
-        <input onChange={(e) => onChangeTitleHandler(e)} />
+        <input onChange={e => onChangeTitleHandler(e)} />
         <span>{labelForSecondField}</span>
       </>
-    );
+    )
   }
 
   if (btnName === "Удалить таску тудулиста") {
     input = (
       <>
         <div>
-          <input onChange={(e) => onChangeTodoIdHandler(e)} />
+          <input onChange={e => onChangeTodoIdHandler(e)} />
           <span>{labelForFirstField}</span>
         </div>
-        <input onChange={(e) => onChangeTaskIdHandler(e)} />
+        <input onChange={e => onChangeTaskIdHandler(e)} />
         <span>{labelForSecondField}</span>
       </>
-    );
+    )
   }
 
   if (btnName === "Обновить таску тудулиста") {
     input = (
       <>
         <div>
-          <input onChange={(e) => onChangeTodoIdHandler(e)} />
+          <input onChange={e => onChangeTodoIdHandler(e)} />
           <span>{labelForFirstField}</span>
         </div>
         <div>
-          <input onChange={(e) => onChangeTaskIdHandler(e)} />
+          <input onChange={e => onChangeTaskIdHandler(e)} />
           <span>{labelForSecondField}</span>
         </div>
         <div>
-          <input onChange={(e) => onChangeTitleHandler(e)} />
+          <input onChange={e => onChangeTitleHandler(e)} />
           <span>{labelForThirdField}</span>
         </div>
       </>
-    );
+    )
   }
 
   return (
     <div>
       <button
         onClick={() => {
-          onClickHandler();
+          onClickHandler()
         }}
       >
         {btnName}
@@ -167,5 +153,5 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
       {input}
       <div>{response && JSON.stringify(response)}</div>
     </div>
-  );
-};
+  )
+}

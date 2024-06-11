@@ -9,25 +9,6 @@ import { Login } from "features/Login/Login"
 import { TodolistsList } from "features/Todolists/TodolistsLists"
 import { ErrorPage } from "components/ErrorPage/ErrorPage"
 
-// const settings = {
-//   withCredentials: true,
-//   headers: {
-//     "API-KEY": "750b834e-bc51-43bd-beec-013db0e3f0f0",
-//   },
-// }
-//
-// const body = {
-//   email: "rupo@list.ru",
-//   password: "123",
-//   rememberMe: true,
-// }
-//
-// const auth = () => {
-//   axios.post("https://social-network.samuraijs.com/api/1.1/auth/login", body, settings)
-// }
-//
-// auth()
-
 const router = createBrowserRouter(
   [
     {
@@ -37,7 +18,7 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <Navigate to={"todolists"} />,
+          element: <Navigate to={"login"} />,
         },
         {
           path: "login",

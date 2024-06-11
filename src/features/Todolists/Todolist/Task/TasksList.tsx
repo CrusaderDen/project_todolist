@@ -4,7 +4,7 @@ import { Task } from "./Task"
 import { useDispatch, useSelector } from "react-redux"
 import { AppRootStateType } from "app/store"
 import { FilterValuesType } from "../../todolists-reducer"
-import { ServerTaskType, TaskStatuses } from "api/api"
+import { ServerTaskType, TaskStatuses } from "api/todolistsApi"
 import { getTasksTC } from "../../tasks-reducer"
 
 type TasksListPropsType = {

@@ -1,4 +1,4 @@
-import { api, ServerTodolistType } from "api/api"
+import { ServerTodolistType, todolistsApi } from "api/todolistsApi"
 import { Dispatch } from "redux"
 import { RequestStatusType, setAppStatusAC } from "app/appReducer"
 import { AppThunk } from "app/store"
@@ -77,20 +77,20 @@ export const {
 // }
 
 //---------Action creators
-export const _RemoveTodolistAC = (id: string): RemoveTodolistActionType => ({ type: "REMOVE-TODOLIST", id }) as const
-export const _AddTodolistAC = (todolist: ServerTodolistType) => ({ type: "ADD-TODOLIST", todolist }) as const
-export const _ChangeTodolistTitleAC = (id: string, title: string) =>
-  ({ type: "CHANGE-TODOLIST-TITLE", id, title }) as const
-export const _ChangeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
-  ({ type: "CHANGE-TODOLIST-FILTER", id, filter }) as const
-export const _SetTodolistsAC = (todolists: ServerTodolistType[]) => ({ type: "SET-TODOLISTS", todolists }) as const
-export const _ChangeTodolistEntityStatusAC = (id: string, status: RequestStatusType) =>
-  ({ type: "CHANGE-TODOLIST-ENTITY-STATUS", id, status }) as const
+// export const _RemoveTodolistAC = (id: string): RemoveTodolistActionType => ({ type: "REMOVE-TODOLIST", id }) as const
+// export const _AddTodolistAC = (todolist: ServerTodolistType) => ({ type: "ADD-TODOLIST", todolist }) as const
+// export const _ChangeTodolistTitleAC = (id: string, title: string) =>
+//   ({ type: "CHANGE-TODOLIST-TITLE", id, title }) as const
+// export const _ChangeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
+//   ({ type: "CHANGE-TODOLIST-FILTER", id, filter }) as const
+// export const _SetTodolistsAC = (todolists: ServerTodolistType[]) => ({ type: "SET-TODOLISTS", todolists }) as const
+// export const _ChangeTodolistEntityStatusAC = (id: string, status: RequestStatusType) =>
+//   ({ type: "CHANGE-TODOLIST-ENTITY-STATUS", id, status }) as const
 
 //---------Thunks
 export const getTodolistsTC = () => async (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  const res = await api.getTodolists()
+  const res = await todolistsApi.getTodolists()
   dispatch(SetTodolistsAC({ todolists: res.data }))
   dispatch(setAppStatusAC({ status: "succeeded" }))
 }
@@ -100,21 +100,21 @@ export const deleteTodolistTC =
   async (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC({ status: "loading" }))
     dispatch(ChangeTodolistEntityStatusAC({ id: todolistId, status: "loading" }))
-    const res = await api.deleteTodolist(todolistId)
+    const res = await todolistsApi.deleteTodolist(todolistId)
     dispatch(RemoveTodolistAC({ id: todolistId }))
     dispatch(setAppStatusAC({ status: "succeeded" }))
   }
 
 export const createTodolistTC = (title: string) => async (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  const res = await api.createTodolist(title)
+  const res = await todolistsApi.createTodolist(title)
   dispatch(AddTodolistAC({ todolist: res.data.data.item }))
   dispatch(setAppStatusAC({ status: "succeeded" }))
 }
 
 export const changeTodolistTitleTC =
   (todolistId: string, title: string) => async (dispatch: Dispatch<TodolistsActionType>) => {
-    const res = await api.updateTodolistTitle(todolistId, title)
+    const res = await todolistsApi.updateTodolistTitle(todolistId, title)
     dispatch(ChangeTodolistTitleAC({ id: todolistId, title: title }))
   }
 

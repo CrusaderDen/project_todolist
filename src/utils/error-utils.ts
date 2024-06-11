@@ -1,8 +1,8 @@
-import { setAppErrorAC, setAppStatusAC } from "../app/appReducer"
-import { TaskResponseType } from "../api/api"
+import { setAppErrorAC, setAppStatusAC } from "app/appReducer"
+import { ResponseType } from "api/todolistsApi"
 import { Dispatch } from "redux"
 
-export const handleServerAppError = <T>(data: TaskResponseType<T>, dispatch: Dispatch) => {
+export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
   if (data.messages.length) {
     dispatch(setAppErrorAC({ error: data.messages[0] }))
   } else {
