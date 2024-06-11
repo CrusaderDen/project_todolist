@@ -6,11 +6,12 @@ beforeEach(() => {
   startState = {
     status: "idle",
     error: null,
+    isInitialized: false,
   }
 })
 
 test("correct error message should be set", () => {
-  const endState = appReducer(startState, setAppErrorAC("Test message"))
+  const endState = appReducer(startState, setAppErrorAC({ error: "Test message" }))
   expect(endState.error).toBe("Test message")
 })
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { todolistsApi } from "api/todolistsApi"
+import { api } from "api/api"
 
 type apiStoriesPT = {
   btnName: string
@@ -50,28 +50,28 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
   const onClickHandler = () => {
     switch (btnName) {
       case "Получить тудулисты":
-        todolistsApi.getTodolists().then(res => setResponse(res.data))
+        api.getTodolists().then(res => setResponse(res.data))
         break
       case "Удалить тудулист":
-        todolistsApi.deleteTodolist(todoId).then(res => setResponse(res.data))
+        api.deleteTodolist(todoId).then(res => setResponse(res.data))
         break
       case "Создать тудулист":
-        todolistsApi.createTodolist(title).then(res => setResponse(res.data))
+        api.createTodolist(title).then(res => setResponse(res.data))
         break
       case "Обновить тайтл тудулиста":
-        todolistsApi.updateTodolistTitle(todoId, title).then(res => setResponse(res.data))
+        api.updateTodolistTitle(todoId, title).then(res => setResponse(res.data))
         break
       case "Получить таски тудулиста":
-        todolistsApi.getTodolistTasks(todoId).then(res => setResponse(res.data.items))
+        api.getTodolistTasks(todoId).then(res => setResponse(res.data.items))
         break
       case "Создать таску тудулиста":
-        todolistsApi.createTodolistTask(todoId, title).then(res => setResponse(res.data))
+        api.createTodolistTask(todoId, title).then(res => setResponse(res.data))
         break
       case "Удалить таску тудулиста":
-        todolistsApi.deleteTodolistTask(todoId, taskId).then(res => setResponse(res.data))
+        api.deleteTodolistTask(todoId, taskId).then(res => setResponse(res.data))
         break
       case "Обновить таску тудулиста":
-        todolistsApi.updateTask(todoId, taskId, title).then(res => setResponse(res.data))
+        api.updateTask(todoId, taskId, title).then(res => setResponse(res.data))
         break
     }
   }

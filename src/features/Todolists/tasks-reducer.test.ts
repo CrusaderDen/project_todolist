@@ -1,5 +1,5 @@
 import { AddTaskAC, RemoveTaskAC, SetTasksAC, tasksReducer, TasksStateType, updateTaskAC } from "./tasks-reducer"
-import { TaskPriorities, TaskStatuses } from "api/todolistsApi"
+import { TaskPriorities, TaskStatuses } from "api/api"
 import { v1 } from "uuid"
 import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC } from "features/Todolists/todolists-reducer"
 

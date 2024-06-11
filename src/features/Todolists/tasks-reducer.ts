@@ -1,5 +1,5 @@
 import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC } from "./todolists-reducer"
-import { ServerTaskType, TaskPriorities, TaskStatuses, todolistsApi, UpdateTaskModelType } from "api/todolistsApi"
+import { ServerTaskType, TaskPriorities, TaskStatuses, api, UpdateTaskModelType } from "api/api"
 import { Dispatch } from "redux"
 import { AppRootStateType } from "app/store"
 import { setAppStatusAC } from "app/appReducer"
@@ -101,21 +101,21 @@ export const { RemoveTaskAC, AddTaskAC, updateTaskAC, SetTasksAC } = slice.actio
 //---------Thunk
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  todolistsApi.getTodolistTasks(todolistId).then(res => {
+  api.getTodolistTasks(todolistId).then(res => {
     dispatch(SetTasksAC({ tasks: res.data.items, todolistId: todolistId }))
     dispatch(setAppStatusAC({ status: "succeeded" }))
   })
 }
 
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
-  todolistsApi.deleteTodolistTask(todolistId, taskId).then(() => {
+  api.deleteTodolistTask(todolistId, taskId).then(() => {
     dispatch(RemoveTaskAC({ todolistId: todolistId, taskId: taskId }))
   })
 }
 
 export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  todolistsApi
+  api
     .createTodolistTask(todolistId, title)
     .then(res => {
       if (res.data.resultCode === 0) {
@@ -148,7 +148,7 @@ export const updateTaskTC =
       deadline: task.deadline,
       ...domainModel,
     }
-    todolistsApi
+    api
       .updateTask(todolistId, taskId, apiModel)
       .then(res => {
         if (res.data.resultCode === 0) {

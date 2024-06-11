@@ -5,11 +5,13 @@ export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 export type InitialStateType = {
   status: RequestStatusType
   error: string | null
+  isInitialized: boolean
 }
 
 const InitialState: InitialStateType = {
   status: "idle",
   error: null,
+  isInitialized: false,
 }
 
 const slice = createSlice({
@@ -19,14 +21,17 @@ const slice = createSlice({
     setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.status = action.payload.status
     },
-    setAppErrorAC(state, action) {
+    setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error
+    },
+    setInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
+      state.isInitialized = action.payload.isInitialized
     },
   },
 })
 
 export const appReducer = slice.reducer
-export const { setAppStatusAC, setAppErrorAC } = slice.actions
+export const { setAppStatusAC, setAppErrorAC, setInitializedAC } = slice.actions
 
 //
 // export const appReducer = (state: InitialStateType = InitialState, action: AppActionsType): InitialStateType => {

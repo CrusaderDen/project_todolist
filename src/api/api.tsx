@@ -12,14 +12,18 @@ const instance = axios.create({
 //---------API
 
 export const authAPI = {
+  me() {
+    return instance.get<ResponseType<UserType>>("/auth/me")
+  },
   logIn(data: LoginType) {
     return instance.post<ResponseType<{ userId: number }>>("/auth/login", data)
   },
-  logOut(data: any) {},
-  me(data: any) {},
+  logOut() {
+    return instance.delete("/auth/login")
+  },
 }
 
-export const todolistsApi = {
+export const api = {
   //Todolists requests
   getTodolists() {
     return instance.get<ServerTodolistType[]>("/todo-lists")
@@ -117,4 +121,10 @@ export type UpdateTaskModelType = {
   priority: TaskPriorities
   startDate: string | null
   deadline: string | null
+}
+
+type UserType = {
+  userId: number
+  email: string
+  login: string
 }

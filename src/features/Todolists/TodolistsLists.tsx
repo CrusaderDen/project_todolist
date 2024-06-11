@@ -5,10 +5,14 @@ import { useSelector } from "react-redux"
 import { AppRootStateType, useAppDispatch } from "app/store"
 import { AddItemForm } from "components/AddItemForm/AddItemForm"
 import { RequestStatusType } from "app/appReducer"
+import { Navigate } from "react-router-dom"
+import { logOutTC } from "features/Login/auth-reducer"
+import { Button } from "@mui/material"
 
 export const TodolistsList = () => {
   const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+  const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
 
   const addTodolist = useCallback(
@@ -19,8 +23,18 @@ export const TodolistsList = () => {
   )
 
   useEffect(() => {
+    if (!isLoggedIn) return
+
     dispatch(getTodolistsTC())
   }, [])
+
+  if (!isLoggedIn) {
+    return <Navigate to={"/login"} />
+  }
+
+  const logOut = () => {
+    dispatch(logOutTC())
+  }
 
   const todolistsRender = todolists.map(todoList => (
     <TodoList
@@ -34,6 +48,9 @@ export const TodolistsList = () => {
 
   return (
     <>
+      <Button variant="contained" onClick={logOut}>
+        Log Out
+      </Button>
       <AddItemForm
         addItem={addTodolist}
         placeholder={"Create a new todolist"}

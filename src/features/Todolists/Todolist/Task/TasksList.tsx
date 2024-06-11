@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo } from "react"
 import { S } from "../TodolistStyles"
 import { Task } from "./Task"
-import { useDispatch, useSelector } from "react-redux"
-import { AppRootStateType } from "app/store"
+import { useSelector } from "react-redux"
+import { AppRootStateType, useAppDispatch } from "app/store"
 import { FilterValuesType } from "../../todolists-reducer"
-import { ServerTaskType, TaskStatuses } from "api/todolistsApi"
+import { ServerTaskType, TaskStatuses } from "api/api"
 import { getTasksTC } from "../../tasks-reducer"
 
 type TasksListPropsType = {
@@ -14,10 +14,9 @@ type TasksListPropsType = {
 
 export const TasksList = (props: TasksListPropsType) => {
   let tasks = useSelector<AppRootStateType, ServerTaskType[]>(state => state.tasks[props.todolistId])
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getTasksTC(props.todolistId))
   }, [])
 

@@ -1,4 +1,4 @@
-import { ServerTodolistType, todolistsApi } from "api/todolistsApi"
+import { ServerTodolistType, api } from "api/api"
 import { Dispatch } from "redux"
 import { RequestStatusType, setAppStatusAC } from "app/appReducer"
 import { AppThunk } from "app/store"
@@ -90,7 +90,7 @@ export const {
 //---------Thunks
 export const getTodolistsTC = () => async (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  const res = await todolistsApi.getTodolists()
+  const res = await api.getTodolists()
   dispatch(SetTodolistsAC({ todolists: res.data }))
   dispatch(setAppStatusAC({ status: "succeeded" }))
 }
@@ -100,21 +100,21 @@ export const deleteTodolistTC =
   async (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC({ status: "loading" }))
     dispatch(ChangeTodolistEntityStatusAC({ id: todolistId, status: "loading" }))
-    const res = await todolistsApi.deleteTodolist(todolistId)
+    const res = await api.deleteTodolist(todolistId)
     dispatch(RemoveTodolistAC({ id: todolistId }))
     dispatch(setAppStatusAC({ status: "succeeded" }))
   }
 
 export const createTodolistTC = (title: string) => async (dispatch: ThunkDispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
-  const res = await todolistsApi.createTodolist(title)
+  const res = await api.createTodolist(title)
   dispatch(AddTodolistAC({ todolist: res.data.data.item }))
   dispatch(setAppStatusAC({ status: "succeeded" }))
 }
 
 export const changeTodolistTitleTC =
   (todolistId: string, title: string) => async (dispatch: Dispatch<TodolistsActionType>) => {
-    const res = await todolistsApi.updateTodolistTitle(todolistId, title)
+    const res = await api.updateTodolistTitle(todolistId, title)
     dispatch(ChangeTodolistTitleAC({ id: todolistId, title: title }))
   }
 

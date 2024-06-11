@@ -1,17 +1,31 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "./App.css"
 import { useSelector } from "react-redux"
-import { AppRootStateType } from "./store"
+import { AppRootStateType, useAppDispatch } from "./store"
 import { Clock } from "components/Clock/Clock"
 import LinearProgress from "@mui/material/LinearProgress"
-import { Box } from "@mui/material"
+import { Box, CircularProgress } from "@mui/material"
 import { ErrorSnackBar } from "components/ErrorSnackBar/ErrorSnackBar"
 import { RequestStatusType } from "./appReducer"
 import { Outlet } from "react-router-dom"
+import { meTC } from "features/Login/auth-reducer"
 
 function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+  const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+  const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    dispatch(meTC())
+  }, [])
+
+  if (!isInitialized) {
+    return (
+      <div style={{ position: "fixed", top: "48%", textAlign: "center", width: "100%" }}>
+        <CircularProgress />
+      </div>
+    )
+  }
   return (
     <div className="App">
       <div style={{ position: "fixed" }}>

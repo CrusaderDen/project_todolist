@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import { useDispatch, useSelector } from "react-redux"
 import { deleteTaskTC, updateTaskTC } from "../../tasks-reducer"
 import { AppRootStateType } from "app/store"
-import { ServerTaskType, TaskStatuses } from "api/todolistsApi"
+import { ServerTaskType, TaskStatuses } from "api/api"
 
 type TaskPropsType = {
   taskId: string
