@@ -4,12 +4,13 @@ import { authAPI } from "api/api"
 import { LoginType } from "features/Login/Login"
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { TotalClearAfterLogoutAC } from "features/Todolists/todolists-reducer"
 
 const initialState = {
   isLoggedIn: false,
 }
 
-type InitialStateType = typeof initialState
+// type InitialStateType = typeof initialState
 
 const slice = createSlice({
   name: "login",
@@ -62,7 +63,8 @@ export const meTC = () => (dispatch: Dispatch) => {
         dispatch(setIsLoggedInAC({ value: true }))
         dispatch(setAppStatusAC({ status: "succeeded" }))
       } else {
-        handleServerAppError(res.data, dispatch)
+        // handleServerAppError(res.data, dispatch)
+        dispatch(setAppStatusAC({ status: "failed" }))
       }
     })
     .catch(e => {
@@ -80,6 +82,7 @@ export const logOutTC = () => (dispatch: Dispatch) => {
       if (res.data.resultCode === 0) {
         dispatch(setIsLoggedInAC({ value: false }))
         dispatch(setAppStatusAC({ status: "succeeded" }))
+        dispatch(TotalClearAfterLogoutAC())
       } else {
         handleServerAppError(res.data, dispatch)
       }

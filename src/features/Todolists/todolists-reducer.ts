@@ -40,6 +40,10 @@ const slice = createSlice({
         state[index].entityStatus = action.payload.status
       }
     },
+    TotalClearAfterLogoutAC() {
+      const result: any = []
+      return result
+    },
   },
 })
 
@@ -51,6 +55,7 @@ export const {
   ChangeTodolistFilterAC,
   SetTodolistsAC,
   ChangeTodolistEntityStatusAC,
+  TotalClearAfterLogoutAC,
 } = slice.actions
 
 //---------Reducer
