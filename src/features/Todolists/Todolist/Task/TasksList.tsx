@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { AppRootStateType, useAppDispatch } from "app/store"
 import { FilterValuesType } from "../../todolists-reducer"
 import { ServerTaskType, TaskStatuses } from "api/api"
-import { getTasksTC } from "../../tasks-reducer"
+import { tasksThunks } from "../../tasks-reducer"
 
 type TasksListPropsType = {
   todolistId: string
@@ -17,7 +17,7 @@ export const TasksList = (props: TasksListPropsType) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getTasksTC(props.todolistId))
+    dispatch(tasksThunks.getTasks(props.todolistId))
   }, [])
 
   tasks = useMemo(() => {
