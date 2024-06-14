@@ -7,7 +7,7 @@ type apiStoriesPT = {
 
 export const ApiStories = ({ btnName }: apiStoriesPT) => {
   const [response, setResponse] = useState<any>("")
-  const [todoId, setTodoId] = useState<any>("")
+  const [todolistId, setTodolistId] = useState<any>("")
   const [taskId, setTaskId] = useState<any>("")
   const [title, setTitle] = useState<any>("")
 
@@ -45,7 +45,7 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
 
   const onChangeTitleHandler = (e: any) => setTitle(e.currentTarget.value)
   const onChangeTaskIdHandler = (e: any) => setTaskId(e.currentTarget.value)
-  const onChangeTodoIdHandler = (e: any) => setTodoId(e.currentTarget.value)
+  const onChangeTodoIdHandler = (e: any) => setTodolistId(e.currentTarget.value)
 
   const onClickHandler = () => {
     switch (btnName) {
@@ -53,25 +53,25 @@ export const ApiStories = ({ btnName }: apiStoriesPT) => {
         api.getTodolists().then(res => setResponse(res.data))
         break
       case "Удалить тудулист":
-        api.deleteTodolist(todoId).then(res => setResponse(res.data))
+        api.deleteTodolist(todolistId).then(res => setResponse(res.data))
         break
       case "Создать тудулист":
         api.createTodolist(title).then(res => setResponse(res.data))
         break
       case "Обновить тайтл тудулиста":
-        api.updateTodolistTitle(todoId, title).then(res => setResponse(res.data))
+        api.updateTodolistTitle(todolistId, title).then(res => setResponse(res.data))
         break
       case "Получить таски тудулиста":
-        api.getTodolistTasks(todoId).then(res => setResponse(res.data.items))
+        api.getTodolistTasks(todolistId).then(res => setResponse(res.data.items))
         break
       case "Создать таску тудулиста":
-        api.createTodolistTask(todoId, title).then(res => setResponse(res.data))
+        api.createTodolistTask({ todolistId, title }).then(res => setResponse(res.data))
         break
       case "Удалить таску тудулиста":
-        api.deleteTodolistTask(todoId, taskId).then(res => setResponse(res.data))
+        api.deleteTodolistTask({ todolistId, taskId }).then(res => setResponse(res.data))
         break
       case "Обновить таску тудулиста":
-        api.updateTask(todoId, taskId, title).then(res => setResponse(res.data))
+        api.updateTask(todolistId, taskId, title).then(res => setResponse(res.data))
         break
     }
   }

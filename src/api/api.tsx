@@ -1,5 +1,6 @@
 import axios from "axios"
 import { LoginType } from "features/Login/Login"
+import { UpdateDomainTaskModelType } from "features/Todolists/tasks-reducer"
 
 const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.1",
@@ -42,10 +43,12 @@ export const api = {
   getTodolistTasks(todolistId: string) {
     return instance.get<getTasksResponseType>(`/todo-lists/${todolistId}/tasks`)
   },
-  createTodolistTask(todolistId: string, title: string) {
+  createTodolistTask(arg: ArgsAddTask) {
+    const { todolistId, title } = arg
     return instance.post<ResponseType<{ item: ServerTaskType }>>(`/todo-lists/${todolistId}/tasks`, { title })
   },
-  deleteTodolistTask(todolistId: string, taskId: string) {
+  deleteTodolistTask(arg: ArgsDeleteTask) {
+    const { todolistId, taskId } = arg
     return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
@@ -54,6 +57,18 @@ export const api = {
 }
 
 //---------Types
+
+export type ArgsAddTask = {
+  title: string
+  todolistId: string
+}
+export type ArgsUpdateTask = {
+  todolistId: string
+  taskId: string
+  domainModel: UpdateDomainTaskModelType
+}
+
+export type ArgsDeleteTask = Omit<ArgsUpdateTask, "domainModel">
 
 //Types for Todos
 type FieldErrorType = {

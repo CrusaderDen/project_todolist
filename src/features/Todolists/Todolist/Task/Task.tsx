@@ -3,9 +3,9 @@ import { S } from "../TodolistStyles"
 import { EditableField } from "components/EditableField/EditableField"
 import { Checkbox, IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { useDispatch, useSelector } from "react-redux"
-import { tasksThunks, updateTaskTC } from "../../tasks-reducer"
-import {AppRootStateType, useAppDispatch} from "app/store"
+import { useSelector } from "react-redux"
+import { tasksThunks } from "../../tasks-reducer"
+import { AppRootStateType, useAppDispatch } from "app/store"
 import { ServerTaskType, TaskStatuses } from "api/api"
 
 type TaskPropsType = {
@@ -20,20 +20,18 @@ export const Task = memo(({ taskId, todolistId }: TaskPropsType) => {
   const dispatch = useAppDispatch()
 
   const onRemoveHandler = useCallback(() => {
-    dispatch(tasksThunks.deleteTask({todolistId, taskId}))
+    dispatch(tasksThunks.deleteTask({ todolistId, taskId }))
   }, [dispatch])
   const onChangeStatusHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const currentStatus = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-      dispatch(
-        updateTaskTC(todolistId, taskId, { status: currentStatus }),
-      )
+      dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { status: currentStatus } }))
     },
-    [dispatch],
+    [dispatch, todolistId, taskId],
   )
   const onChangeTitleHandler = useCallback(
     (newTitle: string) => {
-      dispatch(updateTaskTC(todolistId, taskId, { title: newTitle }))
+      dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { title: newTitle } }))
     },
     [dispatch],
   )
