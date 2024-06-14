@@ -4,8 +4,9 @@ import { Task } from "./Task"
 import { useSelector } from "react-redux"
 import { AppRootStateType, useAppDispatch } from "app/store"
 import { FilterValuesType } from "../../todolists-reducer"
-import { ServerTaskType, TaskStatuses } from "api/api"
+import { ServerTaskType } from "api/api"
 import { tasksThunks } from "../../tasks-reducer"
+import { TaskStatuses } from "common/enums/Enums"
 
 type TasksListPropsType = {
   todolistId: string

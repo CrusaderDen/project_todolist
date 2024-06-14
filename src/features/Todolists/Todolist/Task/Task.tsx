@@ -1,12 +1,13 @@
 import React, { ChangeEvent, memo, useCallback } from "react"
 import { S } from "../TodolistStyles"
-import { EditableField } from "components/EditableField/EditableField"
 import { Checkbox, IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useSelector } from "react-redux"
 import { tasksThunks } from "../../tasks-reducer"
 import { AppRootStateType, useAppDispatch } from "app/store"
-import { ServerTaskType, TaskStatuses } from "api/api"
+import { ServerTaskType } from "api/api"
+import { TaskStatuses } from "common/enums/Enums"
+import { EditableField } from "common/components"
 
 type TaskPropsType = {
   taskId: string

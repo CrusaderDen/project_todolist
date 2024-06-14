@@ -1,14 +1,14 @@
-import React from "react";
-import { S } from "../../features/Todolists/Todolist/TodolistStyles";
-import { FilterValuesType } from "../../features/Todolists/todolists-reducer";
+import React from "react"
+import { S } from "features/Todolists/Todolist/TodolistStyles"
+import { FilterValuesType } from "features/Todolists/todolists-reducer"
 
 type ButtonPropsType = {
-  title: string;
-  taskId?: string;
-  onClickHandler?: () => void;
-  currentFilter?: FilterValuesType;
-  expectedFilter?: string;
-};
+  title: string
+  taskId?: string
+  onClickHandler?: () => void
+  currentFilter?: FilterValuesType
+  expectedFilter?: string
+}
 
 export const UniversalButton = (props: ButtonPropsType) => {
   return (
@@ -20,5 +20,5 @@ export const UniversalButton = (props: ButtonPropsType) => {
     >
       <span>{props.title}</span>
     </S.StyledButton>
-  );
-};
+  )
+}

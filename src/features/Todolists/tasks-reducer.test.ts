@@ -1,8 +1,8 @@
 import { tasksReducer, TasksStateType, tasksThunks } from "./tasks-reducer"
-import { TaskPriorities, TaskStatuses } from "api/api"
 import { v1 } from "uuid"
 import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC } from "features/Todolists/todolists-reducer"
-import { ActionForTest } from "utils/ActionForTest"
+import { TaskPriorities, TaskStatuses } from "common/enums/Enums"
+import { ActionForTest } from "common/types"
 
 export const todolistId1 = v1()
 export const todolistId2 = v1()

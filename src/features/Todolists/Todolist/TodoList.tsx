@@ -3,13 +3,13 @@ import { TodoListTitle } from "./TodoListTitle"
 import { S } from "./TodolistStyles"
 import { FilterButtons } from "./FilterButtons"
 import { TasksList } from "./Task/TasksList"
-import { AddItemForm } from "components/AddItemForm/AddItemForm"
 import { Button, Stack } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { tasksThunks } from "../tasks-reducer"
 import { changeTodolistTitleTC, deleteTodolistTC, FilterValuesType } from "../todolists-reducer"
 import { RequestStatusType } from "app/appReducer"
 import { useAppDispatch } from "app/store"
+import { AddItemForm } from "common/components"
 
 type TodoListPropsType = {
   todolistId: string

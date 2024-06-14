@@ -35,7 +35,7 @@ export const { setAppStatusAC, setAppErrorAC, setInitializedAC } = slice.actions
 
 //
 // export const appReducer = (state: InitialStateType = InitialState, action: AppActionsType): InitialStateType => {
-//     switch (action.type) {
+//     switch (action.types) {
 //         case 'APP/SET-STATUS':
 //             return {...state, status: action.status}
 //         case 'APP/SET-ERROR':
@@ -45,9 +45,9 @@ export const { setAppStatusAC, setAppErrorAC, setInitializedAC } = slice.actions
 //     }
 // }
 
-// export const setAppErrorAC = (error: string | null) => ({ type: "APP/SET-ERROR", error }) as const
-// export const setAppStatusAC = (status: RequestStatusType) => ({ type: "APP/SET-STATUS", status }) as const
+// export const setAppErrorAC = (error: string | null) => ({ types: "APP/SET-ERROR", error }) as const
+// export const setAppStatusAC = (status: RequestStatusType) => ({ types: "APP/SET-STATUS", status }) as const
 //
-// export type setAppErrorActionType = ReturnType<typeof setAppErrorAC>
-// export type setAppStatusActionType = ReturnType<typeof setAppStatusAC>
-// export type AppActionsType = setAppErrorActionType | setAppStatusActionType
+// export types setAppErrorActionType = ReturnType<typeof setAppErrorAC>
+// export types setAppStatusActionType = ReturnType<typeof setAppStatusAC>
+// export types AppActionsType = setAppErrorActionType | setAppStatusActionType

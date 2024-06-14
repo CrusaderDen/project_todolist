@@ -63,7 +63,7 @@ export const {
 //   state: TodolistDomainType[] = [],
 //   action: TodolistsActionType,
 // ): TodolistDomainType[] => {
-//   switch (action.type) {
+//   switch (action.types) {
 //     case "REMOVE-TODOLIST":
 //       return state.filter(tl => tl.id !== action.id)
 //     case "ADD-TODOLIST":
@@ -82,15 +82,15 @@ export const {
 // }
 
 //---------Action creators
-// export const _RemoveTodolistAC = (id: string): RemoveTodolistActionType => ({ type: "REMOVE-TODOLIST", id }) as const
-// export const _AddTodolistAC = (todolist: ServerTodolistType) => ({ type: "ADD-TODOLIST", todolist }) as const
+// export const _RemoveTodolistAC = (id: string): RemoveTodolistActionType => ({ types: "REMOVE-TODOLIST", id }) as const
+// export const _AddTodolistAC = (todolist: ServerTodolistType) => ({ types: "ADD-TODOLIST", todolist }) as const
 // export const _ChangeTodolistTitleAC = (id: string, title: string) =>
-//   ({ type: "CHANGE-TODOLIST-TITLE", id, title }) as const
+//   ({ types: "CHANGE-TODOLIST-TITLE", id, title }) as const
 // export const _ChangeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
-//   ({ type: "CHANGE-TODOLIST-FILTER", id, filter }) as const
-// export const _SetTodolistsAC = (todolists: ServerTodolistType[]) => ({ type: "SET-TODOLISTS", todolists }) as const
+//   ({ types: "CHANGE-TODOLIST-FILTER", id, filter }) as const
+// export const _SetTodolistsAC = (todolists: ServerTodolistType[]) => ({ types: "SET-TODOLISTS", todolists }) as const
 // export const _ChangeTodolistEntityStatusAC = (id: string, status: RequestStatusType) =>
-//   ({ type: "CHANGE-TODOLIST-ENTITY-STATUS", id, status }) as const
+//   ({ types: "CHANGE-TODOLIST-ENTITY-STATUS", id, status }) as const
 
 //---------Thunks
 export const getTodolistsTC = () => async (dispatch: ThunkDispatch) => {

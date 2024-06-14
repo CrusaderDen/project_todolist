@@ -2,13 +2,13 @@ import React, { useEffect } from "react"
 import "./App.css"
 import { useSelector } from "react-redux"
 import { AppRootStateType, useAppDispatch } from "./store"
-import { Clock } from "components/Clock/Clock"
+import { Clock } from "common/components/Clock/Clock"
 import LinearProgress from "@mui/material/LinearProgress"
 import { Box, CircularProgress } from "@mui/material"
-import { ErrorSnackBar } from "components/ErrorSnackBar/ErrorSnackBar"
+import { ErrorSnackBar } from "common/components/ErrorSnackBar/ErrorSnackBar"
 import { RequestStatusType } from "./appReducer"
 import { Outlet } from "react-router-dom"
-import { meTC } from "features/Login/auth-reducer"
+import { meTC } from "features/auth/model/auth-reducer"
 
 function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)

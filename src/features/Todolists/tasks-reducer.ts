@@ -1,18 +1,9 @@
 import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC, TotalClearAfterLogoutAC } from "./todolists-reducer"
-import {
-  api,
-  ArgsAddTask,
-  ArgsDeleteTask,
-  ArgsUpdateTask,
-  ServerTaskType,
-  TaskPriorities,
-  TaskStatuses,
-  UpdateTaskModelType,
-} from "api/api"
+import { api, ArgsAddTask, ArgsDeleteTask, ArgsUpdateTask, ServerTaskType, UpdateTaskModelType } from "api/api"
 import { setAppStatusAC } from "app/appReducer"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
 import { createSlice } from "@reduxjs/toolkit"
-import { createAppAsyncThunk } from "utils/createAppAsyncThunk"
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common"
+import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const slice = createSlice({
   name: "tasks",

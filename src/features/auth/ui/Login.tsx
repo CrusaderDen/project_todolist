@@ -3,7 +3,7 @@ import Box from "@mui/material/Box"
 import { Button, Checkbox, FormControl, FormControlLabel, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import { AppRootStateType, useAppDispatch } from "app/store"
-import { loginTC } from "features/Login/auth-reducer"
+import { loginTC } from "features/auth/model/auth-reducer"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 

@@ -1,17 +1,14 @@
 import { Dispatch } from "redux"
 import { setAppStatusAC, setInitializedAC } from "app/appReducer"
-import { authAPI } from "api/api"
-import { LoginType } from "features/Login/Login"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
+import { LoginType } from "features/auth/ui/Login"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { TotalClearAfterLogoutAC } from "features/Todolists/todolists-reducer"
+import { handleServerAppError, handleServerNetworkError } from "common/utils"
+import { authAPI } from "features/auth/api/authApi"
 
 const initialState = {
   isLoggedIn: false,
 }
-
-// type InitialStateType = typeof initialState
-
 const slice = createSlice({
   name: "login",
   initialState: initialState,
@@ -25,17 +22,6 @@ const slice = createSlice({
 export const { setIsLoggedInAC } = slice.actions
 export const authReducer = slice.reducer
 
-// export const authReducer = (state: InitialStateType, action: ActionsType): InitialStateType => {
-//   switch (action.type) {
-//     case "login/SET-IS-LOGGED-IN":
-//       return { ...state, isLoggedIn: action.value }
-//     default:
-//       return { ...state }
-//   }
-// }
-
-//actions
-// export const setIsLoggedInAC = (value: boolean) => ({ type: "login/SET-IS-LOGGED-IN", value }) as const
 //thunks
 export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }))
@@ -91,6 +77,3 @@ export const logOutTC = () => (dispatch: Dispatch) => {
       handleServerNetworkError(e, dispatch)
     })
 }
-
-// types
-// type ActionsType = ReturnType<typeof setIsLoggedInAC>

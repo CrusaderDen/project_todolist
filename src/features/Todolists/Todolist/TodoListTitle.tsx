@@ -1,26 +1,26 @@
-import React, {useCallback} from 'react';
-import {S} from './TodolistStyles'
-import {EditableField} from "../../../components/EditableField/EditableField";
+import React, { useCallback } from "react"
+import { S } from "./TodolistStyles"
+import { EditableField } from "common/components"
 
 type TodoListHeaderPropsType = {
-    title: string
-    todolistId: string
-    changeTodolistTitle: (newTitle: string, todolistId: string) => void
+  title: string
+  todolistId: string
+  changeTodolistTitle: (newTitle: string, todolistId: string) => void
 }
 
 export const TodoListTitle = (props: TodoListHeaderPropsType) => {
+  const onChangeTitleHandler = useCallback(
+    (newValue: string) => {
+      props.changeTodolistTitle(newValue, props.todolistId)
+    },
+    [props.todolistId],
+  )
 
-    const onChangeTitleHandler = useCallback((newValue: string) => {
-        props.changeTodolistTitle(newValue, props.todolistId)
-    }, [props.todolistId])
-
-    return (
-        <S.StyledHeader>
-            <S.StyledTaskTitle>
-                <EditableField title={props.title} onChange={onChangeTitleHandler}/>
-            </S.StyledTaskTitle>
-        </S.StyledHeader>
-    );
-};
-
-
+  return (
+    <S.StyledHeader>
+      <S.StyledTaskTitle>
+        <EditableField title={props.title} onChange={onChangeTitleHandler} />
+      </S.StyledTaskTitle>
+    </S.StyledHeader>
+  )
+}

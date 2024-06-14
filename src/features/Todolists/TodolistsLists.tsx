@@ -3,10 +3,10 @@ import { TodoList } from "./Todolist/TodoList"
 import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { AppRootStateType, useAppDispatch } from "app/store"
-import { AddItemForm } from "components/AddItemForm/AddItemForm"
+import { AddItemForm } from "common/components/AddItemForm/AddItemForm"
 import { RequestStatusType } from "app/appReducer"
 import { Navigate } from "react-router-dom"
-import { logOutTC } from "features/Login/auth-reducer"
+import { logOutTC } from "features/auth/model/auth-reducer"
 import { Button } from "@mui/material"
 
 export const TodolistsList = () => {
