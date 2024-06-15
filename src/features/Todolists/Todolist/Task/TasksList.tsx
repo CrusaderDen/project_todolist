@@ -19,7 +19,7 @@ export const TasksList = (props: TasksListPropsType) => {
 
   useEffect(() => {
     dispatch(tasksThunks.getTasks(props.todolistId))
-  }, [])
+  }, [dispatch])
 
   tasks = useMemo(() => {
     if (props.filter === "active") {

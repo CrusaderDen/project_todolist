@@ -8,7 +8,7 @@ import { Box, CircularProgress } from "@mui/material"
 import { ErrorSnackBar } from "common/components/ErrorSnackBar/ErrorSnackBar"
 import { RequestStatusType } from "./appReducer"
 import { Outlet } from "react-router-dom"
-import { meTC } from "features/auth/model/auth-reducer"
+import { authThunks } from "features/auth/model/auth-reducer"
 
 function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -16,8 +16,8 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(meTC())
-  }, [])
+    dispatch(authThunks.initializeApp())
+  }, [dispatch])
 
   if (!isInitialized) {
     return (

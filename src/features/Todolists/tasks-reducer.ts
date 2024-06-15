@@ -1,4 +1,4 @@
-import { AddTodolistAC, RemoveTodolistAC, SetTodolistsAC, TotalClearAfterLogoutAC } from "./todolists-reducer"
+import { todolistsThunks, TotalClearAfterLogoutAC } from "./todolists-reducer"
 import { api, ArgsAddTask, ArgsDeleteTask, ArgsUpdateTask, ServerTaskType, UpdateTaskModelType } from "api/api"
 import { setAppStatusAC } from "app/appReducer"
 import { createSlice } from "@reduxjs/toolkit"
@@ -31,20 +31,25 @@ const slice = createSlice({
           tasks[index] = { ...tasks[index], ...action.payload.domainModel }
         }
       })
-      .addCase(AddTodolistAC, (state, action) => {
+      .addCase(todolistsThunks.createTodolist.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = []
       })
-      .addCase(RemoveTodolistAC, (state, action) => {
+      .addCase(todolistsThunks.deleteTodolist.fulfilled, (state, action) => {
         delete state[action.payload.id]
       })
-      .addCase(SetTodolistsAC, (state, action) => {
+      .addCase(todolistsThunks.getTodolists.fulfilled, (state, action) => {
         const result: TasksStateType = {}
         for (let i = 0; i < action.payload.todolists.length; i++) {
           result[action.payload.todolists[i].id] = []
         }
         return result
       })
-      .addCase(TotalClearAfterLogoutAC, (state, action) => {
+      // .addCase(todolistsThunks.getTodolists.fulfilled, (state, action) => {
+      //   action.payload.todolists.forEach((tl) => {
+      //     state[tl.id] = []
+      //   })
+      // })
+      .addCase(TotalClearAfterLogoutAC, () => {
         const result = {}
         return result
       })

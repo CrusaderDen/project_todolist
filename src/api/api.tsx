@@ -16,7 +16,8 @@ export const api = {
   createTodolist(title: string) {
     return instance.post<BaseResponseType<{ item: ServerTodolistType }>>(`/todo-lists/`, { title })
   },
-  updateTodolistTitle(todolistId: string, title: string) {
+  updateTodolistTitle(arg: ArgsUpdateTodolistTitle) {
+    const { todolistId, title } = arg
     return instance.put<BaseResponseType<{ item: ServerTodolistType }>>(`/todo-lists/${todolistId}`, { title })
   },
 
@@ -47,6 +48,11 @@ export type ArgsUpdateTask = {
   todolistId: string
   taskId: string
   domainModel: UpdateDomainTaskModelType
+}
+
+export type ArgsUpdateTodolistTitle = {
+  todolistId: string
+  title: string
 }
 
 export type ArgsDeleteTask = Omit<ArgsUpdateTask, "domainModel">

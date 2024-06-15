@@ -28,7 +28,7 @@ export const Task = memo(({ taskId, todolistId }: TaskPropsType) => {
       const currentStatus = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
       dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { status: currentStatus } }))
     },
-    [dispatch, todolistId, taskId],
+    [dispatch],
   )
   const onChangeTitleHandler = useCallback(
     (newTitle: string) => {

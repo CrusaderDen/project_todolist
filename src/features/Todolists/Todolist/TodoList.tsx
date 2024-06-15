@@ -6,7 +6,7 @@ import { TasksList } from "./Task/TasksList"
 import { Button, Stack } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { tasksThunks } from "../tasks-reducer"
-import { changeTodolistTitleTC, deleteTodolistTC, FilterValuesType } from "../todolists-reducer"
+import { FilterValuesType, todolistsThunks } from "../todolists-reducer"
 import { RequestStatusType } from "app/appReducer"
 import { useAppDispatch } from "app/store"
 import { AddItemForm } from "common/components"
@@ -22,10 +22,10 @@ export const TodoList = ({ todolistId, title, filter, entityStatus }: TodoListPr
   const dispatch = useAppDispatch()
 
   const removeTodolist = () => {
-    dispatch(deleteTodolistTC(todolistId))
+    dispatch(todolistsThunks.deleteTodolist(todolistId))
   }
   const changeTodolistTitle = (title: string) => {
-    dispatch(changeTodolistTitleTC(todolistId, title))
+    dispatch(todolistsThunks.changeTodolistTitle({ todolistId, title }))
   }
   const addTask = useCallback(
     (title: string) => {

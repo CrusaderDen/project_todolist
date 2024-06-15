@@ -1,4 +1,4 @@
-import { createTodolistTC, getTodolistsTC, TodolistDomainType } from "./todolists-reducer"
+import { TodolistDomainType, todolistsThunks } from "./todolists-reducer"
 import { TodoList } from "./Todolist/TodoList"
 import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
@@ -6,8 +6,8 @@ import { AppRootStateType, useAppDispatch } from "app/store"
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm"
 import { RequestStatusType } from "app/appReducer"
 import { Navigate } from "react-router-dom"
-import { logOutTC } from "features/auth/model/auth-reducer"
 import { Button } from "@mui/material"
+import { authThunks } from "features/auth/model/auth-reducer"
 
 export const TodolistsList = () => {
   const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
@@ -17,23 +17,22 @@ export const TodolistsList = () => {
 
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(createTodolistTC(title))
+      dispatch(todolistsThunks.createTodolist(title))
     },
     [dispatch],
   )
 
   useEffect(() => {
     if (!isLoggedIn) return
-
-    dispatch(getTodolistsTC())
-  }, [])
+    dispatch(todolistsThunks.getTodolists())
+  }, [dispatch])
 
   if (!isLoggedIn) {
     return <Navigate to={"/login"} />
   }
 
   const logOut = () => {
-    dispatch(logOutTC())
+    dispatch(authThunks.logout())
   }
 
   const todolistsRender = todolists.map(todoList => (

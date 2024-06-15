@@ -32,22 +32,3 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer
 export const { setAppStatusAC, setAppErrorAC, setInitializedAC } = slice.actions
-
-//
-// export const appReducer = (state: InitialStateType = InitialState, action: AppActionsType): InitialStateType => {
-//     switch (action.types) {
-//         case 'APP/SET-STATUS':
-//             return {...state, status: action.status}
-//         case 'APP/SET-ERROR':
-//             return {...state, error: action.error}
-//         default:
-//             return {...state}
-//     }
-// }
-
-// export const setAppErrorAC = (error: string | null) => ({ types: "APP/SET-ERROR", error }) as const
-// export const setAppStatusAC = (status: RequestStatusType) => ({ types: "APP/SET-STATUS", status }) as const
-//
-// export types setAppErrorActionType = ReturnType<typeof setAppErrorAC>
-// export types setAppStatusActionType = ReturnType<typeof setAppStatusAC>
-// export types AppActionsType = setAppErrorActionType | setAppStatusActionType
